@@ -60,7 +60,7 @@ class User extends Authenticatable
     ];
 
 
-    public function tables()
+    public function databases()
     {
         return $this->hasMany(DataBase::class);
     }
