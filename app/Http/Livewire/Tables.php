@@ -17,17 +17,12 @@ class Tables extends Component
 
 
     function viewTables(){
-        $user = Auth::user();
 
-        $databaseModel = $user->databases->where('id', $this->database['id'])->first();
-
-        $this->tables = $databaseModel->tables->fresh();
+        $this->tables = $this->database->tables->fresh();
 
     }
 
     public function addTable(){
-
-        $user = Auth::user();
 
         $newTable = Table::create([
             'name' => $this->tableName
@@ -50,6 +45,11 @@ class Tables extends Component
 
         $this->viewTables();
 
+    }
+
+    public function redirectToTableBuild($id)
+    {
+        return redirect()->to('tables/'. $id . '/build');
     }
 
     public function mount($id){
