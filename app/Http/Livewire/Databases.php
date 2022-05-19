@@ -48,10 +48,11 @@ class Databases extends Component
 
         $this->viewDatabases();
 
+    }
 
-//        dd($this->databases->where('id', $database['id'])->first());
-//
-//        $this->databases->forget($database);
+    public function redirectToTables($id)
+    {
+        return redirect()->to('databases/'. $id);
     }
 
     public function mount(){

@@ -9,6 +9,10 @@ class Table extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name'
+    ];
+
     public function columns()
     {
         return $this->hasMany(Column::class);

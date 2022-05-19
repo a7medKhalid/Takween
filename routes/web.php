@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Livewire\Databases;
+use App\Http\Livewire\Tables;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,5 +28,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/databases', \App\Http\Livewire\Databases::class);
+    Route::get('/databases', Databases::class);
+    Route::get('/databases/{id}', Tables::class);
+
 });
