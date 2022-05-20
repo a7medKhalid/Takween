@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->string('name');
-            $table->enum('type', ['string', 'number', 'relation', 'phone', 'email' ,'image']);
+            $table->enum('type', ['id', 'text', 'number', 'checkbox' , 'tel', 'email' ,'url' ,'date'  ,'relation']);
 
             $table->foreignId('table_id')->nullable();
         });

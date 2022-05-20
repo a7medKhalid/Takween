@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('name');
             $table->json('data')->nullable();
 
+            $table->integer('counter')->default(1);
+
             $table->foreignId('data_base_id')->nullable();
         });
     }

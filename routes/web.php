@@ -2,6 +2,7 @@
 
 use App\Http\Livewire\Databases;
 use App\Http\Livewire\TableColumns;
+use App\Http\Livewire\TableFill;
 use App\Http\Livewire\Tables;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +32,10 @@ Route::middleware([
 
     Route::get('/databases', Databases::class);
     Route::get('/databases/{id}', Tables::class);
+
     Route::get('/tables/{id}/build', TableColumns::class);
+    Route::get('/tables/{id}/fill', TableFill::class);
+
 
 
 });

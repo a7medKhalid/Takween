@@ -44,7 +44,7 @@
                             <td class="py-4 px-6 border-b border-grey-light">1000</td>
 
                             <td class="py-4 px-6 border-b border-grey-light">
-                                <button wire:click="" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">fill</button>
+                                <button wire:click="redirectToTableFill({{ $table->id }})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">fill</button>
                                 <button wire:click="redirectToTableBuild({{ $table->id }})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">build</button>
                                 <button wire:click="deleteTable({{$table}})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">delete</button>
                             </td>

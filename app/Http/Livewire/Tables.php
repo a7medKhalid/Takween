@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Column;
 use App\Models\Table;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -34,6 +35,13 @@ class Tables extends Component
 
         $this->tableName = '';
 
+        $idColumn = Column::create([
+            'name' => 'id',
+            'type' => 'id'
+        ]);
+
+        $newTable->columns()->save($idColumn);
+
 
     }
 
@@ -50,6 +58,11 @@ class Tables extends Component
     public function redirectToTableBuild($id)
     {
         return redirect()->to('tables/'. $id . '/build');
+    }
+
+    public function redirectToTableFill($id)
+    {
+        return redirect()->to('tables/'. $id . '/fill');
     }
 
     public function mount($id){

@@ -21,7 +21,7 @@ class TableColumns extends Component
 
     function viewColumns(){
 
-        $this->columns = $this->table->columns->where('table_id', $this->table['id'])->fresh();
+        $this->columns = $this->table->columns->fresh();
 
     }
 
