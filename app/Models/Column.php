@@ -11,7 +11,8 @@ class Column extends Model
 
     protected $fillable = [
         'name',
-        'type'
+        'type',
+        'relationColumnName'
     ];
 
 }

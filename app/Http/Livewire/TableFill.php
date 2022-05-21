@@ -10,6 +10,11 @@ class TableFill extends Component
 {
     public $table;
 
+
+
+    public $parents;
+    public $databaseId;
+
     public $rows;
     public $columns;
 
@@ -20,8 +25,6 @@ class TableFill extends Component
         $this->table->fresh();
 
         $this->rows = json_decode($this->table->data, true);
-
-//        dd($this->rows);
 
         if(!$this->rows){
             $this->rows = [];
@@ -43,7 +46,7 @@ class TableFill extends Component
         $this->table->data = json_encode($this->rows);
 
         $this->table->counter += 1;
-        
+
         $this->table->save();
 
     }
@@ -63,9 +66,24 @@ class TableFill extends Component
 
     }
 
-    public function saveRows(){
+    public function getParentRows($relationName){
+
+        $tableName = strtok($relationName, '_');
+
+        $table = Table::where('data_base_id', $this->databaseId)->where('name', $tableName )->first();
+
+        $data = json_decode($table->data, true);
+
+        $this->parents = $data;
+
+//        $this->parents =  $database->tables->map(function ($tables) {
+//            return collect($tables->toArray())
+//                ->only( 'name')
+//                ->all();
+//        });
 
     }
+
 
     public function mount($id){
 
@@ -77,9 +95,11 @@ class TableFill extends Component
 
         if($database){
             $this->table = $table;
+            $this->databaseId = $database->id;
         }
 
         $this->viewRows();
+
     }
     public function render()
     {

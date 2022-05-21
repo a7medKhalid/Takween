@@ -19,6 +19,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->enum('type', ['id', 'text', 'number', 'checkbox' , 'tel', 'email' ,'url' ,'date'  ,'relation']);
+            $table->string('relationColumnName')->nullable();
 
             $table->foreignId('table_id')->nullable();
         });

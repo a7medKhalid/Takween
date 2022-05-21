@@ -12,11 +12,15 @@ class TableColumns extends Component
 
     public $table;
 
+    public $databaseId;
+    public $relationColumns;
+
+    public $tables;
     public $columns;
 
     public $columnName ;
     public $columnType ;
-
+    public $relationColumnName ;
 
 
     function viewColumns(){
@@ -27,10 +31,21 @@ class TableColumns extends Component
 
     public function addColumn(){
 
-        $newColumn = Column::create([
-            'name' => $this->columnName,
-            'type' => $this->columnType
-        ]);
+        if($this->columnType === 'relation'){
+            $newColumn = Column::create([
+                'name' => $this->columnName . '_id',
+                'type' => $this->columnType,
+                'relationColumnName' => $this->relationColumnName
+            ]);
+        }else{
+
+            $newColumn = Column::create([
+                'name' => $this->columnName,
+                'type' => $this->columnType
+            ]);
+        }
+
+
 
         $this->table->columns()->save($newColumn);
 
@@ -38,6 +53,18 @@ class TableColumns extends Component
 
         $this->columnName = '';
         $this->columnType = '';
+    }
+
+    public function updateRelationColumnList(){
+
+        $table = Table::where('data_base_id', $this->databaseId)->where('name', $this->columnName )->first();
+
+        if($table){
+            $this->relationColumns = $table->columns;
+        }else{
+            $this->relationColumns = [];
+        }
+
     }
 
     public function deleteColumn($column){
@@ -60,9 +87,19 @@ class TableColumns extends Component
 
         if($database){
             $this->table = $table;
+            $this->databaseId = $database->id;
         }
 
         $this->viewColumns();
+
+        $this->tables =  $database->tables->map(function ($tables) {
+            return collect($tables->toArray())
+                ->only( 'name')
+                ->all();
+        });
+
+        $this->relationColumns = [['name' =>'test']];
+
     }
 
     public function render()
