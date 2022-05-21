@@ -2,16 +2,63 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\ExportDataBaseController;
 use App\Models\DataBase;
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+
+use Illuminate\Support\Facades\Response;
+
+
 
 class Databases extends Component
 {
     public $databases;
 
+    public $hideModal;
+
 
     public $databaseName ;
+
+    public $exportType;
+    public $databaseId;
+
+    public function showModal($databaseId){
+        $this->hideModal = false;
+
+        $this->databaseId = $databaseId;
+    }
+    public function hideModal(){
+    $this->hideModal = true;
+    }
+
+    public function exportDatabase(){
+
+        $user = Auth::user();
+
+        $databaseModel = $user->databases->where('id', $this->databaseId)->first();
+
+
+        if($databaseModel){
+
+
+            if ($this->exportType === 'json'){
+                $data = (new \App\Http\Controllers\ExportDataBaseController)->jsonExport($databaseModel->id);
+
+                $jsongFile = time() . '_file.json';
+
+                return response()->streamDownload(function () use ($data) {
+                    echo $data;
+                }, $jsongFile);
+
+            }
+        }
+
+
+
+    }
 
 
     function viewDatabases(){
@@ -56,6 +103,8 @@ class Databases extends Component
     }
 
     public function mount(){
+
+        $this->hideModal = true;
         $this->viewDatabases();
     }
 

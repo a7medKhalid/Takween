@@ -45,7 +45,7 @@
                             <td class="py-4 px-6 border-b border-grey-light">
                                 <button wire:click="redirectToTables({{ $database->id }})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">tables</button>
                                 <button wire:click="" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">editors</button>
-                                <button wire:click="" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">export</button>
+                                <button wire:click="showModal({{$database->id}})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">export</button>
                                 <button wire:click="deleteDataBase({{$database}})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">delete</button>
                             </td>
                         </tr>
@@ -56,6 +56,41 @@
             </div>
         </div>
     </div>
+
+
+    @if (!$hideModal)
+        <div class="h-screen w-full absolute flex items-center justify-center bg-modal">
+            <div class="bg-white rounded shadow p-8 m-4 max-w-xs max-h-full text-center overflow-y-scroll">
+                <div class="mb-4">
+                    <h1>Welcome!</h1>
+                </div>
+                <div class="mb-8">
+                    <form wire:submit.prevent="exportDatabase" class="flex flex-col items-center w-full mb-4 md:flex-row md:px-16">
+
+                        <label>Choose export type from this list:
+                            <select wire:model="exportType" id="types">
+                                <option value="json">JSON</option>
+                                <option value="sqlite">sqlite</option>
+                                <option value="nestedJson">nested JSON</option>
+                            </select>
+                        </label>
+
+                        <div class="flex justify-center mb-4">
+                            <button type="submit" class="flex-no-shrink text-white py-2 px-4 rounded bg-gray-800 hover:bg-teal-dark mr-3" wire:click="hideModal()">Download</button>
+                            <button class="flex-no-shrink text-white py-2 px-4 rounded bg-gray-800 hover:bg-teal-dark" wire:click="hideModal()">Cancel</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    @endif
+
+
+
+
+
 
 
 

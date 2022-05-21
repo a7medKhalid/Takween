@@ -10,7 +10,7 @@ class ExportDataBaseController extends Controller
 {
 
 
-    function jsonExport($database_id){
+    public function jsonExport($database_id){
 
         //get database
         $database = DataBase::find($database_id);
