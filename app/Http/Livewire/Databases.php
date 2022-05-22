@@ -53,6 +53,13 @@ class Databases extends Component
                     echo $data;
                 }, $jsongFile);
 
+            }elseif ($this->exportType === 'sqlite'){
+                $dbName = (new \App\Http\Controllers\ExportDataBaseController)->sqliteExport($databaseModel->id);
+                //download file with database name
+
+//                dd(public_path($dbName));
+
+                return response()->streamDownload(public_path($dbName));
             }
         }
 

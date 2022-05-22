@@ -8,6 +8,11 @@
 
 
                     @foreach($columns as $column)
+
+                        {{--  to parse relation and number as integers  --}}
+
+
+
                         @if($column->type != 'id' and $column->type != 'relation')
 
                             <input
