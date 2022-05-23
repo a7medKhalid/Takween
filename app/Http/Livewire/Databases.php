@@ -59,7 +59,7 @@ class Databases extends Component
 
 //                dd(public_path($dbName));
 
-                return response()->streamDownload(public_path($dbName));
+                return response()->download(public_path($dbName));
             }
         }
 

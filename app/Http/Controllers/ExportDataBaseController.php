@@ -18,7 +18,7 @@ class ExportDataBaseController extends Controller
 
         $sqlite = new JSON2SQL($dbName , '');
 
-        $sqlite->debugMode(true);
+        $sqlite->debugMode(false);
 
 
         $tables = $database->tables;
