@@ -65,7 +65,7 @@ class User extends Authenticatable
         return $this->hasMany(DataBase::class);
     }
 
-    public function pemissions()
+    public function permissions()
     {
         return $this->hasMany(Permission::class);
     }

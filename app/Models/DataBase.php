@@ -19,7 +19,7 @@ class DataBase extends Model
         return $this->hasMany(Table::class);
     }
 
-    public function pemissions()
+    public function permissions()
     {
         return $this->hasMany(Permission::class);
     }

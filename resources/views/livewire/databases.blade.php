@@ -44,7 +44,7 @@
 
                             <td class="py-4 px-6 border-b border-grey-light">
                                 <button wire:click="redirectToTables({{ $database->id }})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">tables</button>
-                                <button wire:click="" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">editors</button>
+                                <button wire:click="redirectToEditors({{ $database->id }})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">editors</button>
                                 <button wire:click="showModal({{$database->id}})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">export</button>
                                 <button wire:click="deleteDataBase({{$database}})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">delete</button>
                             </td>

@@ -109,6 +109,11 @@ class Databases extends Component
         return redirect()->to('databases/'. $id);
     }
 
+    public function redirectToEditors($id)
+    {
+        return redirect()->to('databases/'. $id . '/editors');
+    }
+
     public function mount(){
 
         $this->hideModal = true;

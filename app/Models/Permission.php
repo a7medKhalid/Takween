@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Permission extends Model
 {
     use HasFactory;
+
+    public function getNameAttribute()
+    {
+        return $this->user->name;
+    }
+
+    public function getEmailAttribute()
+    {
+        return $this->user->email;
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
