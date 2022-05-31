@@ -57,6 +57,36 @@
         </div>
     </div>
 
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <table class="text-left w-full border-collapse"> <!--Border collapse doesn't work on this site yet but it's available in newer tailwind versions -->
+                    <thead>
+                    <tr>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">name</th>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">rows</th>
+
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($invitedDatabases as $database)
+                        <tr class="hover:bg-grey-lighter">
+                            <td class="py-4 px-6 border-b border-grey-light">{{ $database->name }}</td>
+                            <td class="py-4 px-6 border-b border-grey-light">1000</td>
+
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <button wire:click="redirectToTables({{ $database->id }})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">tables</button>
+                            </td>
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 
     @if (!$hideModal)
         <div class="h-screen w-full absolute flex items-center justify-center bg-modal">

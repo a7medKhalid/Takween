@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->boolean('isValid')->default(true);
 
-            $table->foreignId('data_base_id')->nullable();
+            $table->foreignId('database_id')->nullable();
             $table->foreignId('user_id')->nullable();
         });
     }

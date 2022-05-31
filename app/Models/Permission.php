@@ -23,4 +23,9 @@ class Permission extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function database()
+    {
+        return $this->belongsTo(DataBase::class);
+    }
 }

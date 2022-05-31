@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Response;
 class Databases extends Component
 {
     public $databases;
+    public $invitedDatabases = [];
+
 
     public $hideModal;
 
@@ -75,6 +77,17 @@ class Databases extends Component
 
     }
 
+    function viewInvitedDatabases(){
+        $user = Auth::user();
+
+        $permissions = $user->permissions->fresh();
+
+        foreach ($permissions as $permission){
+            array_push($this->invitedDatabases, $permission->database);
+        }
+
+    }
+
     public function addDataBase(){
 
         $user = Auth::user();
@@ -118,6 +131,8 @@ class Databases extends Component
 
         $this->hideModal = true;
         $this->viewDatabases();
+        $this->viewInvitedDatabases();
+
     }
 
     public function render()

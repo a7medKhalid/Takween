@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\DataBase;
 use App\Models\Table;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -114,6 +115,12 @@ class TableFill extends Component
         if($database){
             $this->table = $table;
             $this->databaseId = $database->id;
+        }else{
+            $permission = $user->permissions->where('database_id', $table->data_base_id)->first();
+            if ($permission){
+                $this->table = $table;
+                $this->databaseId = $id;
+            }
         }
 
         $this->viewRows();

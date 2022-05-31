@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Column;
+use App\Models\DataBase;
 use App\Models\Table;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -15,6 +16,8 @@ class Tables extends Component
     public $tables;
 
     public $tableName ;
+
+    public $isOwned;
 
 
     function viewTables(){
@@ -70,6 +73,16 @@ class Tables extends Component
         $user = Auth::user();
 
         $this->database = $user->databases->where('id', $id)->first();
+
+        $this->isOwned = 1;
+
+        if (!$this->database){
+            $permission = $user->permissions->where('database_id', $id)->first();
+            if ($permission){
+                $this->database = DataBase::find($id);
+                $this->isOwned = 0;
+            }
+        }
 
         $this->viewTables();
     }
