@@ -91,6 +91,7 @@ class TableFill extends Component
 
         $table = Table::where('data_base_id', $this->databaseId)->where('name', $tableName )->first();
 
+
         $data = json_decode($table->data, true);
 
         $this->parents = $data;
@@ -119,7 +120,7 @@ class TableFill extends Component
             $permission = $user->permissions->where('data_base_id', $table->data_base_id)->first();
             if ($permission){
                 $this->table = $table;
-                $this->databaseId = $id;
+                $this->databaseId = $table->data_base_id;
             }
         }
 
