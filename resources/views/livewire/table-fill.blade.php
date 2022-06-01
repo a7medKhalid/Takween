@@ -6,40 +6,53 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <form wire:submit.prevent="addRow()" class="flex flex-col items-center w-full mb-4 md:flex-row md:px-16">
 
-
-                    @foreach($columns as $column)
-
-                        {{--  to parse relation and number as integers  --}}
+                    <div class="mt-3">
+                        @foreach($columns as $column)
 
 
+                            @if($column->type != 'id' and $column->type != 'relation')
 
-                        @if($column->type != 'id' and $column->type != 'relation')
+                                <div class="mt-3">
+                                    <label>Enter {{$column->name}}: </label>
+                                    <input
+                                        wire:model="createdRow.{{$column->name}}"
+                                        placeholder="{{$column->name}}"
+                                        required=""
+                                        type="{{$column->type}}"
+                                        class="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
+                                    />
+                                </div>
 
-                            <input
-                                wire:model="createdRow.{{$column->name}}"
-                                placeholder="{{$column->name}}"
-                                required=""
-                                type="{{$column->type}}"
-                                class="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                            />
-                        @elseif($column->type === "relation")
-                            {{$this->getParentRows($column->name)}}
+                            @elseif($column->type === "relation")
+                                {{$this->getParentRows($column->name)}}
 
-                            <select wire:model="createdRow.{{ $column->name }}" id="parents">
-                                @foreach($this->parents as $parent)
-                                    <option value="{{$parent['id']}}" > {{$parent[$column->relationColumnName]}} </option>
-                                @endforeach
-                            </select>
+                                <div class="mt-3">
+                                    <label>Enter {{$column->name}}: </label>
+                                    <select wire:model="createdRow.{{ $column->name }}" id="parents">
 
-                        @endif
-                    @endforeach
-                    <button
+                                        @if($this->parents)
+                                            @foreach($this->parents as $parent)
+                                                <option value="{{$parent['id']}}" > {{$parent[$column->relationColumnName]}} </option>
+                                            @endforeach
+                                        @else
+                                            <option value="" > Null </option>
+                                        @endif
 
-                        type="submit"
-                        class="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md md:w-auto bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-                    >
-                        Add Table
-                    </button>
+
+                                    </select>
+                                </div>
+
+                            @endif
+                        @endforeach
+                        <button
+
+                            type="submit"
+                            class="mt-3 inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md md:w-auto bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                        >
+                            Add Row
+                        </button>
+                    </div>
+
                 </form>
             </div>
         </div>

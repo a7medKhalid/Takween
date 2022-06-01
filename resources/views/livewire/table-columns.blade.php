@@ -6,58 +6,71 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <form wire:submit.prevent="addColumn" class="flex flex-col items-center w-full mb-4 md:flex-row md:px-16">
 
+                    <div class="mt-3">
+                        <div class="mt-3">
+                            <label>Choose a type from this list:
+                                <select wire:model="columnType" id="types">
+                                    <option value="">select type</option>
+                                    <option value="text">text</option>
+                                    <option value="number">number</option>
+                                    <option value="checkbox">boolean</option>
+                                    <option value="tel">phone</option>
+                                    <option value="email">email</option>
+                                    <option value="url">link</option>
+                                    <option value="date">date</option>
+                                    <option value="relation">relation</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        @if($columnType === "relation")
+
+                            <div class="mt-3">
+                                <label> Choose a a table form the list:
+                                    <select wire:model="columnName" id="tables" wire:change="updateRelationColumnList()">
+                                        <option value="">select table</option>
+                                    @foreach($tables as $table)
+                                            <option value="{{$table['name']}}">{{$table['name']}}</option>
+                                        @endforeach
+                                    </select >
+                                </label>
+                            </div>
+
+                            <div class="mt-3">
+                                <label> Chose relation column from the list:
+                                    <select wire:model="relationColumnName" id="relationColumns">
+                                        <option value="">select column</option>
+                                        @foreach($relationColumns as $column)
+                                            <option value="{{$column['name']}}">{{$column['name']}}</option>
+                                        @endforeach
+                                    </select>
+                                </label>
+                            </div>
 
 
-                    <label>Choose a type from this list:
-                        <select wire:model="columnType" id="types">
-                            <option value="text">text</option>
-                            <option value="number">number</option>
-                            <option value="checkbox">boolean</option>
-                            <option value="tel">phone</option>
-                            <option value="email">email</option>
-                            <option value="url">link</option>
-                            <option value="date">date</option>
-                            <option value="relation">relation</option>
-                        </select>
-                    </label>
+                        @else
+                            <div class="mt-3">
+                                <label> Column Name: </label>
+                                <input
+                                    wire:model="columnName"
+                                    placeholder="name"
+                                    required=""
+                                    type="text"
+                                    class="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
+                                />
+                            </div>
 
-                    @if($columnType === "relation")
+                        @endif
 
-                        <label> Choose a a table form the list:
-                            <select wire:model="columnName" id="tables" wire:change="updateRelationColumnList()">
-                                @foreach($tables as $table)
-                                    <option value="{{$table['name']}}">{{$table['name']}}</option>
-                                @endforeach
-                            </select >
-                        </label>
-
+                        <button
+                            type="submit"
+                            class="mt-3 inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md md:w-auto bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                        >
+                            Add Column
+                        </button>
+                    </div>
 
 
-                        <label> Chose relation column from the list:
-                            <select wire:model="relationColumnName" id="relationColumns">
-                                @foreach($relationColumns as $column)
-                                    <option value="{{$column['name']}}">{{$column['name']}}</option>
-                                @endforeach
-                            </select>
-                        </label>
-
-
-                    @else
-                        <input
-                            wire:model="columnName"
-                            placeholder="name"
-                            required=""
-                            type="text"
-                            class="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                        />
-                    @endif
-
-                    <button
-                        type="submit"
-                        class="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md md:w-auto bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-                    >
-                        Add Column
-                    </button>
                 </form>
             </div>
         </div>

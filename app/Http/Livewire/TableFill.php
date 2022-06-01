@@ -116,7 +116,7 @@ class TableFill extends Component
             $this->table = $table;
             $this->databaseId = $database->id;
         }else{
-            $permission = $user->permissions->where('database_id', $table->data_base_id)->first();
+            $permission = $user->permissions->where('data_base_id', $table->data_base_id)->first();
             if ($permission){
                 $this->table = $table;
                 $this->databaseId = $id;

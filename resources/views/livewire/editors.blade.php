@@ -5,27 +5,31 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <form wire:submit="addEditor" class="flex flex-col items-center w-full mb-4 md:flex-row md:px-16">
-                    <input
-                        wire:model="editorEmail"
-                        placeholder="email"
-                        required=""
-                        type="email"
-                        class="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                    />
-{{--                    <label> Choose a a table form the list:--}}
-{{--                        <select wire:model="databaseId">--}}
-{{--                            @foreach($databases as $database)--}}
-{{--                                <option value="{{$database['id']}}">{{$database['name']}}</option>--}}
-{{--                            @endforeach--}}
-{{--                        </select >--}}
-{{--                    </label>--}}
-                    <button
+                    <div class="mt-3">
+                        <label> Editor Email: </label>
 
-                        type="submit"
-                        class="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md md:w-auto bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-                    >
-                        Add editor
-                    </button>
+                        <input
+                            wire:model="editorEmail"
+                            placeholder="email"
+                            required=""
+                            type="email"
+                            class="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
+                        />
+                        {{--                    <label> Choose a a table form the list:--}}
+                        {{--                        <select wire:model="databaseId">--}}
+                        {{--                            @foreach($databases as $database)--}}
+                        {{--                                <option value="{{$database['id']}}">{{$database['name']}}</option>--}}
+                        {{--                            @endforeach--}}
+                        {{--                        </select >--}}
+                        {{--                    </label>--}}
+                        <button
+
+                            type="submit"
+                            class="mt-3 inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md md:w-auto bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                        >
+                            Add editor
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

@@ -77,7 +77,7 @@ class Tables extends Component
         $this->isOwned = 1;
 
         if (!$this->database){
-            $permission = $user->permissions->where('database_id', $id)->first();
+            $permission = $user->permissions->where('data_base_id', $id)->first();
             if ($permission){
                 $this->database = DataBase::find($id);
                 $this->isOwned = 0;

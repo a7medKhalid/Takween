@@ -98,8 +98,6 @@ class TableColumns extends Component
                 ->all();
         });
 
-        $this->relationColumns = [['name' =>'test']];
-
     }
 
     public function render()

@@ -31,13 +31,13 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/databases', Databases::class);
-    Route::get('/databases/{id}', Tables::class);
-    Route::get('/databases/{id}/editors', Editors::class);
+    Route::get('/databases', Databases::class)->name('Databases');
+    Route::get('/databases/{id}', Tables::class)->name('Tables');
+    Route::get('/databases/{id}/editors', Editors::class)->name('Editors');
 
 
-    Route::get('/tables/{id}/build', TableColumns::class);
-    Route::get('/tables/{id}/fill', TableFill::class);
+    Route::get('/tables/{id}/build', TableColumns::class)->name('Build Table');
+    Route::get('/tables/{id}/fill', TableFill::class)->name('Fill Table');
 
 
 

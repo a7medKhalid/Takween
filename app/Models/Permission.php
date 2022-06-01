@@ -26,6 +26,6 @@ class Permission extends Model
 
     public function database()
     {
-        return $this->belongsTo(DataBase::class);
+        return $this->belongsTo(DataBase::class, 'data_base_id');
     }
 }
