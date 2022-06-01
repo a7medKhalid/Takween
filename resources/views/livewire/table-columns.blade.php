@@ -40,9 +40,14 @@
                                 <label> Chose relation column from the list:
                                     <select wire:model="relationColumnName" id="relationColumns">
                                         <option value="">select column</option>
-                                        @foreach($relationColumns as $column)
-                                            <option value="{{$column['name']}}">{{$column['name']}}</option>
-                                        @endforeach
+                                        @if($relationColumns)
+                                            @foreach($relationColumns as $column)
+                                                <option value="{{$column['name']}}">{{$column['name']}}</option>
+                                            @endforeach
+                                        @else
+                                            <option value="" > Null </option>
+                                        @endif
+
                                     </select>
                                 </label>
                             </div>
@@ -94,9 +99,15 @@
                             <td class="py-4 px-6 border-b border-grey-light">{{ $column->name }}</td>
                             <td class="py-4 px-6 border-b border-grey-light">{{ $column->type }}</td>
 
-                            <td class="py-4 px-6 border-b border-grey-light">
-                                <button wire:click="deleteColumn({{$column}})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">delete</button>
-                            </td>
+                            @if($column->type != 'id')
+                                <td class="py-4 px-6 border-b border-grey-light">
+                                    <button wire:click="deleteColumn({{$column}})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">delete</button>
+                                </td>
+                            @else
+                                <td class="py-4 px-6 border-b border-grey-light">
+                                    <button class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">-----</button>
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
 
