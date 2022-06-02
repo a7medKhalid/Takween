@@ -28,7 +28,7 @@ class ExportDataBaseController extends Controller
 
 
             if ($table->data){
-                
+
                 //get table schema
 
                 $columns = $table->columns;

@@ -138,6 +138,8 @@ class JSON2SQL extends Controller
 
         $cmd = sprintf($sql, $_tableName, implode(",", $tableColumns));
         // Execute sql command
+
+        dd($cmd);
         $this->dbHandler->exec($cmd);
 
         // Debug
