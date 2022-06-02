@@ -104,8 +104,32 @@ class TableFill extends Component
 
     }
 
+    function populateWithDefaultValues(){
+
+        foreach($this->columns as $column){
+            if($column->type === "relation"){
+                $this->getParentRows($column->name);
+
+                if($this->parents){
+                    $this->createdRow['' . $column->name] = $this->parents[0]['id'];
+                }
+                else{
+                    $this->createdRow['' . $column->name] = '';
+                }
+
+            }
+            elseif ($column->type === "checkbox"){
+                $this->createdRow['' . $column->name] = 0;
+            }
+        }
+
+//        dd($this->createdRow);
+
+    }
+
 
     public function mount($id){
+
 
         $table = Table::find($id);
 
@@ -125,6 +149,9 @@ class TableFill extends Component
         }
 
         $this->viewRows();
+
+        $this->populateWithDefaultValues();
+
 
     }
     public function render()
