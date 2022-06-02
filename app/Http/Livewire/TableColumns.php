@@ -20,6 +20,9 @@ class TableColumns extends Component
 
     public $columnName ;
     public $columnType ;
+
+    public $customRelationName;
+    public $isCustomRelationName;
     public $relationColumnName ;
 
 
@@ -32,8 +35,13 @@ class TableColumns extends Component
     public function addColumn(){
 
         if($this->columnType === 'relation'){
+
+            if(!$this->isCustomRelationName){
+                $this->customRelationName = $this->columnName . '_id';
+            }
+
             $newColumn = Column::create([
-                'name' => $this->columnName . '_id',
+                'name' => $this->customRelationName,
                 'type' => $this->columnType,
                 'relationColumnName' => $this->relationColumnName
             ]);
@@ -97,6 +105,8 @@ class TableColumns extends Component
                 ->only( 'name')
                 ->all();
         });
+
+        $this->isCustomRelationName = 0;
 
     }
 

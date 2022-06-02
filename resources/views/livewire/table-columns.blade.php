@@ -54,6 +54,29 @@
                                 </label>
                             </div>
 
+                            <div class="mt-3">
+                                <label> Chose custom relation name: </label>
+
+                                <input
+                                    wire:model="isCustomRelationName"
+                                    type="checkbox"
+                                    class="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
+                                />
+                            </div>
+
+                            @if($isCustomRelationName)
+
+                                <div class="mt-3">
+                                    <label>Enter custom relation name: </label>
+                                    <input
+                                        wire:model="customRelationName"
+                                        placeholder="name"
+                                        required=""
+                                        type="text"
+                                        class="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
+                                    />
+                                </div>
+                            @endif
 
                         @else
                             <div class="mt-3">
