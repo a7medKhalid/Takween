@@ -58,17 +58,23 @@ class ExportDataBaseController extends Controller
 
             $rows = [];
 
-            foreach (json_decode($table->data) as $row){
+            if ($table->data){
+                foreach (json_decode($table->data) as $row){
 
-                unset($row->id);
+                    unset($row->id);
 
-                array_push($rows, $row);
+                    array_push($rows, $row);
 
+                }
+
+                $sqlite->selectTable($table->name);
+                $sqlite->add(json_encode($rows, JSON_NUMERIC_CHECK));
             }
 
 
-            $sqlite->selectTable($table->name);
-            $sqlite->add(json_encode($rows, JSON_NUMERIC_CHECK));
+
+
+
 
 
 
