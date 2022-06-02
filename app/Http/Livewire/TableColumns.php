@@ -43,7 +43,8 @@ class TableColumns extends Component
             $newColumn = Column::create([
                 'name' => $this->customRelationName,
                 'type' => $this->columnType,
-                'relationColumnName' => $this->relationColumnName
+                'relationColumnName' => $this->relationColumnName,
+                'relationTable' => $this->columnName
             ]);
         }else{
 

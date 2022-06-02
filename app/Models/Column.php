@@ -15,4 +15,9 @@ class Column extends Model
         'relationColumnName'
     ];
 
+    public function table()
+    {
+        return $this->belongsTo(Table::class, 'table_id');
+    }
+
 }

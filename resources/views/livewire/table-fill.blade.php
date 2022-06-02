@@ -12,7 +12,7 @@
 
                             @if($column->type === "relation")
 
-                                {{$this->getParentRows($column->name)}}
+                                {{$this->getParentRows($column)}}
 
                                 <div class="mt-3">
                                     <label>Enter {{$column->name}}: </label>

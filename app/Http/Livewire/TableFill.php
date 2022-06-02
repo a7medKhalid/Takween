@@ -85,7 +85,9 @@ class TableFill extends Component
 
     }
 
-    public function getParentRows($relationName){
+    public function getParentRows($column){
+
+        $relationName = $column->relationTable;
 
         $tableName = strtok($relationName, '_');
 
@@ -108,7 +110,7 @@ class TableFill extends Component
 
         foreach($this->columns as $column){
             if($column->type === "relation"){
-                $this->getParentRows($column->name);
+                $this->getParentRows($column);
 
                 if($this->parents){
                     $this->createdRow['' . $column->name] = $this->parents[0]['id'];
