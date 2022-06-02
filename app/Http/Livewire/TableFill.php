@@ -89,9 +89,8 @@ class TableFill extends Component
 
         $relationName = $column->relationTable;
 
-        $tableName = strtok($relationName, '_');
 
-        $table = Table::where('data_base_id', $this->databaseId)->where('name', $tableName )->first();
+        $table = Table::where('data_base_id', $this->databaseId)->where('name', $relationName )->first();
 
 
         $data = json_decode($table->data, true);
