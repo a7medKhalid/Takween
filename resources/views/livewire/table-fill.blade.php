@@ -10,20 +10,8 @@
                         @foreach($columns as $column)
 
 
-                            @if($column->type != 'id' and $column->type != 'relation')
+                            @if($column->type === "relation")
 
-                                <div class="mt-3">
-                                    <label>Enter {{$column->name}}: </label>
-                                    <input
-                                        wire:model="createdRow.{{$column->name}}"
-                                        placeholder="{{$column->name}}"
-                                        required=""
-                                        type="{{$column->type}}"
-                                        class="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                                    />
-                                </div>
-
-                            @elseif($column->type === "relation")
                                 {{$this->getParentRows($column->name)}}
 
                                 <div class="mt-3">
@@ -40,6 +28,28 @@
 
 
                                     </select>
+                                </div>
+
+                            @elseif($column->type === "checkbox")
+                                <div class="mt-3">
+                                    <label>{{$column->name}}: </label>
+                                    <input
+                                        wire:model="createdRow.{{$column->name}}"
+                                        placeholder="{{$column->name}}"
+                                        type="{{$column->type}}"
+                                        class="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
+                                    />
+                                </div>
+                            @elseif($column->type != 'id')
+                                <div class="mt-3">
+                                    <label>Enter {{$column->name}}: </label>
+                                    <input
+                                        wire:model="createdRow.{{$column->name}}"
+                                        placeholder="{{$column->name}}"
+                                        required=""
+                                        type="{{$column->type}}"
+                                        class="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
+                                    />
                                 </div>
 
                             @endif
