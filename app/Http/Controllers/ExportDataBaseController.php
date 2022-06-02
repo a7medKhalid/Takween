@@ -26,39 +26,41 @@ class ExportDataBaseController extends Controller
 
         foreach ($tables as $table){
 
-            //get table schema
-
-            $columns = $table->columns;
-
-            $schema = [];
-
-            foreach ($columns as $column){
-
-                $type = '';
-                if (in_array($column->type, array('text', 'tel', 'email', 'url' ,'date')) ){
-                    $type = (object) [
-                        $column->name => 'text',
-                    ];
-                    array_push($schema,$type);
-                }elseif (in_array($column->type, array('number', 'checkbox','relation' ))){
-                    $type = (object) [
-                        $column->name => 'integer',
-                    ];
-                    array_push($schema,$type);
-                }
-
-
-
-            }
-
-            $schema = json_encode($schema);
-
-            $sqlite->createTable($schema, $table->name);
-
-
-            $rows = [];
 
             if ($table->data){
+                
+                //get table schema
+
+                $columns = $table->columns;
+
+                $schema = [];
+
+                foreach ($columns as $column){
+
+                    $type = '';
+                    if (in_array($column->type, array('text', 'tel', 'email', 'url' ,'date')) ){
+                        $type = (object) [
+                            $column->name => 'text',
+                        ];
+                        array_push($schema,$type);
+                    }elseif (in_array($column->type, array('number', 'checkbox','relation' ))){
+                        $type = (object) [
+                            $column->name => 'integer',
+                        ];
+                        array_push($schema,$type);
+                    }
+
+
+
+                }
+
+                $schema = json_encode($schema);
+
+                $sqlite->createTable($schema, $table->name);
+
+
+                $rows = [];
+
                 foreach (json_decode($table->data) as $row){
 
                     unset($row->id);
@@ -70,10 +72,6 @@ class ExportDataBaseController extends Controller
                 $sqlite->selectTable($table->name);
                 $sqlite->add(json_encode($rows, JSON_NUMERIC_CHECK));
             }
-
-
-
-
 
 
 
