@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use mysql_xdevapi\Exception;
 use SQLite3;
+use Whoops\Exception\ErrorException;
 
 class JSON2SQL extends Controller
 {
@@ -112,9 +114,17 @@ class JSON2SQL extends Controller
     public function createTable($schema, $tableName = null)
     {
         $_tableName = empty($tableName) ? $this->tableName : $tableName;
-        $sql = "CREATE TABLE IF NOT EXISTS %s(ID INTEGER PRIMARY KEY AUTOINCREMENT,%s);";
+
+
 
         $columns = json_decode($schema);    // convert JSON to PHP Array or PHP Object
+
+        if (empty($columns)){
+            $sql = "CREATE TABLE IF NOT EXISTS %s(ID INTEGER PRIMARY KEY AUTOINCREMENT %s);";
+        }else{
+            $sql = "CREATE TABLE IF NOT EXISTS %s(ID INTEGER PRIMARY KEY AUTOINCREMENT,%s);";
+        }
+
 
         // for Object
         if (is_object($columns)) {
@@ -137,10 +147,17 @@ class JSON2SQL extends Controller
         }
 
         $cmd = sprintf($sql, $_tableName, implode(",", $tableColumns));
-        // Execute sql command
 
-        
-        $this->dbHandler->exec($cmd);
+        try {
+            // Execute sql command
+            $this->dbHandler->exec($cmd);
+        }catch (\Exception $e){
+            dd($cmd, $schema);
+        }
+
+
+
+
 
         // Debug
         $this->_D($cmd);
