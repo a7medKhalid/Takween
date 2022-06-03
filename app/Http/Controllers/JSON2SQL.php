@@ -152,7 +152,7 @@ class JSON2SQL extends Controller
             // Execute sql command
             $this->dbHandler->exec($cmd);
         }catch (\Exception $e){
-            dd($cmd, $schema);
+            dd($e, $cmd, $schema);
         }
 
 
