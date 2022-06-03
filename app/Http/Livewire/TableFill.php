@@ -61,7 +61,7 @@ class TableFill extends Component
 
 
         $this->viewRows();
-        
+
         array_push($this->rows, $row);
 
         $this->table->data = json_encode($this->rows,JSON_NUMERIC_CHECK);
@@ -75,15 +75,18 @@ class TableFill extends Component
     public function deleteRow($row){
 
         $key = array_search($row, $this->rows);
+
+        $this->viewRows();
+
         if ($key !== false) {
             unset($this->rows[$key]);
         }
+
 
         $this->table->data = json_encode($this->rows);
 
         $this->table->save();
 
-        $this->viewRows();
 
     }
 
