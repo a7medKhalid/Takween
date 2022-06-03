@@ -59,8 +59,10 @@ class TableFill extends Component
 
         $row = array_merge($row, $this->createdRow);
 
-        array_push($this->rows, $row);
 
+        $this->viewRows();
+        
+        array_push($this->rows, $row);
 
         $this->table->data = json_encode($this->rows,JSON_NUMERIC_CHECK);
 
