@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Column;
 use App\Models\DataBase;
 use App\Models\Table;
 use Illuminate\Http\Request;
@@ -185,6 +186,8 @@ class ExportDataBaseController extends Controller
 
             $schema = [];
 
+            $relationColumnsNames = [];
+
             foreach ($columns as $column){
 
                 //quote reserved sql words
@@ -203,6 +206,11 @@ class ExportDataBaseController extends Controller
                         $column->name => 'integer',
                     ];
                     array_push($schema,$type);
+
+                    //collect relation columns
+                    if ($column->type === 'relation'){
+                        array_push($relationColumnsNames, $column->name);
+                    }
                 }
 
 
@@ -215,12 +223,40 @@ class ExportDataBaseController extends Controller
 
             if ($table->data){
 
-
                 $rows = [];
 
-                foreach (json_decode($table->data) as $row){
+                foreach (json_decode($table->data, true) as $row){
 
-                    unset($row->id);
+//                    unset($row->id);
+//
+//
+//                    foreach (array_keys((array)$row) as $item){
+//                        if (in_array($item, $relationColumnsNames)){
+//                            //get index of relation
+//                            $relationColumn = $columns->where('name', $item)->first();
+//
+//                            $parentTable = Table::where('data_base_id', $table->data_base_id)->where('name',$relationColumn->relationTable)->first();
+//
+//                            $parentRows = $parentTable->data;
+//
+//                            $parentRowId = $row[$item];
+//
+//                            $counter = 0;
+//                            foreach (json_decode($parentRows, true) as $parentRow){
+//                                $counter += 1;
+//
+//                                if ($parentRow['id'] === $parentRowId) {
+//                                    $row[$item] = $counter;
+//                                }
+//                            }
+//
+//                        }
+//                    }
+
+                    //add relation by index instead of id
+
+
+//                    dd($row);
 
                     array_push($rows, $row);
 
