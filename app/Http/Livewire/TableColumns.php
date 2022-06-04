@@ -106,6 +106,26 @@ class TableColumns extends Component
 
         $this->viewColumns();
 
+        //delete column from rows
+        $this->table->fresh();
+
+        $rows = json_decode($this->table->data, true);
+
+        if ($rows){
+
+            $updatedRows = [];
+
+            foreach ($rows as $row){
+                unset($row[$columnModel->name]);
+
+                array_push($updatedRows, $row);
+            }
+            
+            $this->table->data = json_encode($updatedRows,JSON_NUMERIC_CHECK);
+
+            $this->table->save();
+        }
+
     }
 
     public function mount($id){
