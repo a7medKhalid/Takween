@@ -20,7 +20,7 @@
 
                                         @if($this->parents)
                                             @foreach($this->parents as $parent)
-                                                <option value="{{$parent['id']}}" > {{$parent[$column->relationColumnName]}} </option>
+                                                <option value="{{$parent['id']}}" >{{$parent['id']}} | {{$parent[$column->relationColumnName]}} </option>
                                             @endforeach
                                         @else
                                             <option value="" > Null </option>
