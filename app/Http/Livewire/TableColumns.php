@@ -120,7 +120,7 @@ class TableColumns extends Component
 
                 array_push($updatedRows, $row);
             }
-            
+
             $this->table->data = json_encode($updatedRows,JSON_NUMERIC_CHECK);
 
             $this->table->save();

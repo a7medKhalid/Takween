@@ -16,7 +16,7 @@ class DataBase extends Model
 
     public function tables()
     {
-        return $this->hasMany(Table::class);
+        return $this->hasMany(Table::class)->orderBy('name');
     }
 
     public function permissions()

@@ -82,7 +82,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($rows as $row)
+                    @foreach(array_reverse($rows) as $row)
                         <tr class="hover:bg-grey-lighter">
                             @foreach($columns as $column)
                                 <td class="py-4 px-6 border-b border-grey-light">{{ $row[$column->name] }}</td>
