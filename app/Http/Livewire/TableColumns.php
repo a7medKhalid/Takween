@@ -54,6 +54,28 @@ class TableColumns extends Component
             ]);
         }
 
+        //add null values for pervious data
+        $this->table->fresh();
+
+        $rows = json_decode($this->table->data, true);
+
+        $nullColumn = [$newColumn->name => 'NULL'];
+
+        if ($rows){
+
+            $updatedRows = [];
+
+            foreach ($rows as $row){
+                $row = array_merge($row, $nullColumn);
+
+                array_push($updatedRows, $row);
+            }
+
+            $this->table->data = json_encode($updatedRows,JSON_NUMERIC_CHECK);
+
+            $this->table->save();
+        }
+
 
 
         $this->table->columns()->save($newColumn);
