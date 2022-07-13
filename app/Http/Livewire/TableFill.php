@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Actions\TableJSONData\AddRow;
+use App\Actions\TableJSONData\DeleteRow;
 use App\Models\DataBase;
 use App\Models\Table;
 use Illuminate\Support\Facades\Auth;
@@ -45,21 +46,11 @@ class TableFill extends Component
 
     }
 
-    public function deleteRow($row){
+    public function deleteRow(DeleteRow $deleteRow, $row){
 
-        $key = array_search($row, $this->rows);
+        $deleteRow->execute($this->table, $row);
 
         $this->viewRows();
-
-        if ($key !== false) {
-            unset($this->rows[$key]);
-        }
-
-
-        $this->table->data = json_encode($this->rows);
-
-        $this->table->save();
-
 
     }
 
