@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\TableController;
 use App\Models\Column;
 use App\Models\DataBase;
 use App\Models\Table;
@@ -28,31 +29,21 @@ class Tables extends Component
 
     public function addTable(){
 
-        $newTable = Table::create([
-            'name' => $this->tableName
-        ]);
+        $tableController = new TableController();
 
-        $this->database->tables()->save($newTable);
+        $newTable = $tableController->create($this->database, $this->tableName);
 
         $this->tables->push($newTable);
-
         $this->tableName = '';
-
-        $idColumn = Column::create([
-            'name' => 'id',
-            'type' => 'id'
-        ]);
-
-        $newTable->columns()->save($idColumn);
 
 
     }
 
     public function deleteTable($table){
 
-        $tableModel = $this->database->tables->where('id', $table['id'])->first();
+       $tableController = new TableController();
 
-        $tableModel->delete();
+         $tableController->delete($this->database, $table);
 
         $this->viewTables();
 

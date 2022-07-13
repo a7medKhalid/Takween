@@ -2,26 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Column;
 use App\Models\Table;
 
 class TableController extends Controller
 {
-    function create($name, $level, $db_id){
 
-        Table::create([
-            'name' => $name,
-            'level' => $level,
-            'db_id' => $db_id
+    public function create($database, $tableName){
+
+        $newTable = Table::create([
+            'name' => $tableName
         ]);
+
+        $database->tables()->save($newTable);
+
+        $idColumn = Column::create([
+            'name' => 'id',
+            'type' => 'id'
+        ]);
+
+        $newTable->columns()->save($idColumn);
+
+        return $newTable;
 
     }
 
-    function update($table_id, $data){
+    public function delete($database, $table){
 
-        $table = Table::find($table_id);
+        $tableModel = $database->tables->where('id', $table['id'])->first();
 
-        $table->data = $data;
-
-        $table->save();
+        $tableModel->delete();
     }
 }
