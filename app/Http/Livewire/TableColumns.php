@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\ColumnController;
 use App\Models\Column;
 use App\Models\Table;
 use Illuminate\Support\Facades\Auth;
@@ -34,51 +35,18 @@ class TableColumns extends Component
 
     public function addColumn(){
 
-        if($this->columnType === 'relation'){
+        $columnController = new ColumnController();
 
-            if(!$this->isCustomRelationName){
-                $this->customRelationName = $this->columnName . '_id';
-            }
-
-            $newColumn = Column::create([
-                'name' => $this->customRelationName,
-                'type' => $this->columnType,
-                'relationColumnName' => $this->relationColumnName,
-                'relationTable' => $this->columnName
-            ]);
+        if(!$this->isCustomRelationName){
+            $this->relationColumnName = $this->columnName . '_id';
         }else{
-
-            $newColumn = Column::create([
-                'name' => $this->columnName,
-                'type' => $this->columnType
-            ]);
-        }
-
-        //add null values for pervious data
-        $this->table->fresh();
-
-        $rows = json_decode($this->table->data, true);
-
-        $nullColumn = [$newColumn->name => 'NULL'];
-
-        if ($rows){
-
-            $updatedRows = [];
-
-            foreach ($rows as $row){
-                $row = array_merge($row, $nullColumn);
-
-                array_push($updatedRows, $row);
-            }
-
-            $this->table->data = json_encode($updatedRows,JSON_NUMERIC_CHECK);
-
-            $this->table->save();
+            $this->relationColumnName = $this->customRelationName;
         }
 
 
+        $newColumn = $columnController->create($this->table, $this->columnType, $this->columnName, $this->relationColumnName);
 
-        $this->table->columns()->save($newColumn);
+
 
         $this->columns->push($newColumn);
 

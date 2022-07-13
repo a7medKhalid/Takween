@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Actions\ExportDatabase\JSONExport;
+use App\Actions\ExportDatabase\SQLiteExport;
 use App\Http\Controllers\ExportDataBaseController;
 use App\Models\DataBase;
 use Illuminate\Http\File;
