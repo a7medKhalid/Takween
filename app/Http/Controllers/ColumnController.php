@@ -53,4 +53,33 @@ class ColumnController extends Controller
 
         return $newColumn;
     }
+
+    public function delete($table, $column){
+
+        $columnModel = $table->columns->where('id', $column['id'])->first();
+
+        $columnModel->delete();
+
+
+        //delete column from rows
+        $table->fresh();
+
+        $rows = json_decode($table->data, true);
+
+        if ($rows){
+
+            $updatedRows = [];
+
+            foreach ($rows as $row){
+                unset($row[$columnModel->name]);
+
+                array_push($updatedRows, $row);
+            }
+
+            $table->data = json_encode($updatedRows,JSON_NUMERIC_CHECK);
+
+            $table->save();
+        }
+
+    }
 }
