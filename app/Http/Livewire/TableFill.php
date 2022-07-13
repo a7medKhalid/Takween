@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Actions\TableJSONData\AddRow;
 use App\Models\DataBase;
 use App\Models\Table;
 use Illuminate\Support\Facades\Auth;
@@ -36,39 +37,11 @@ class TableFill extends Component
     }
 
 
-    public function addRow(){
+    public function addRow(AddRow $addRow){
 
-
-        $row = ['id' => $this->table->counter];
-
-
-//        {{--  to parse relation and number as integers  --}}
-
-//        dd($this->createdRow);
-
-        $integerColumns = [];
-        foreach ($this->columns as $column){
-            if ($column->type !== 'id' and in_array($column->type, array('number', 'checkbox', 'relation'))) {
-                array_push($integerColumns,$column->name);
-            }
-        }
-
-        foreach ($integerColumns as $integerColumn) {
-            $this->createdRow[$integerColumn] = intval($this->createdRow[$integerColumn]);
-        }
-
-        $row = array_merge($row, $this->createdRow);
-
+        $addRow->execute($this->table, $this->createdRow);
 
         $this->viewRows();
-
-        array_push($this->rows, $row);
-
-        $this->table->data = json_encode($this->rows,JSON_NUMERIC_CHECK);
-
-        $this->table->counter += 1;
-
-        $this->table->save();
 
     }
 
