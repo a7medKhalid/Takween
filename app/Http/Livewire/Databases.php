@@ -36,7 +36,7 @@ class Databases extends Component
     $this->hideModal = true;
     }
 
-    public function exportDatabase(){
+    public function exportDatabase(SQLiteExport $sqliteExport, JSONExport $jsonExport){
 
         $user = Auth::user();
 
@@ -47,21 +47,18 @@ class Databases extends Component
 
 
             if ($this->exportType === 'json'){
-                $data = (new \App\Http\Controllers\ExportDataBaseController)->jsonExport($databaseModel->id);
+                $data = $jsonExport->execute($databaseModel->id);
 
-                $jsongFile = time() . '_file.json';
+                $jsonFile = time() . '_file.json';
 
                 return response()->streamDownload(function () use ($data) {
                     echo $data;
-                }, $jsongFile);
+                }, $jsonFile);
 
             }elseif ($this->exportType === 'sqlite'){
-                $dbName = (new \App\Http\Controllers\ExportDataBaseController)->sqliteExport($databaseModel->id);
-                //download file with database name
+                $dbName = $sqliteExport->execute($databaseModel->id);
 
-//                dd(public_path($dbName));
-
-                return response()->download(public_path($dbName));
+                return response()->download(public_path($dbName))->deleteFileAfterSend(true);
             }
         }
 
