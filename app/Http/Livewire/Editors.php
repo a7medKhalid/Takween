@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\PermissionController;
 use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -26,22 +27,13 @@ class Editors extends Component
     public function addEditor(){
         $user = Auth::user();
 
+        $permissionController = new PermissionController();
 
-
-        $editor = User::where('email', $this->editorEmail)->first();
-
-
-        $permission = Permission::create();
-
-        $this->database->permissions()->save($permission);
-
-        $editor->permissions()->save($permission);
+        $permissionController->create($this->database, $this->editorEmail);
 
         $this->viewEditors();
 
         $this->editorEmail = '';
-
-//        dd($this->editors);
 
     }
 
