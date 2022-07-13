@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Actions\ExportDatabase\JSONExport;
 use App\Actions\ExportDatabase\SQLiteExport;
-use App\Http\Controllers\ExportDataBaseController;
+use App\Http\Controllers\DataBaseController;
 use App\Models\DataBase;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Auth;
@@ -91,11 +91,8 @@ class Databases extends Component
 
         $user = Auth::user();
 
-        $newDatabase = Database::create([
-            'name' => $this->databaseName
-        ]);
-
-        $user->databases()->save($newDatabase);
+        $databaseController = new DataBaseController();
+        $newDatabase = $databaseController->create($user, $this->databaseName);
 
         $this->databases->push($newDatabase);
 
@@ -108,9 +105,9 @@ class Databases extends Component
 
         $user = Auth::user();
 
-        $databaseModel = $user->databases->where('id', $database['id'])->first();
+        $databaseController = new DataBaseController();
 
-        $databaseModel->delete();
+        $databaseController->delete($user, $database['id']);
 
         $this->viewDatabases();
 
