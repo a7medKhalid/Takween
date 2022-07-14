@@ -42,28 +42,20 @@ class Databases extends Component
 
         $user = Auth::user();
 
-        $databaseModel = $user->databases->where('id', $this->databaseId)->first();
+        if ($this->exportType === 'json'){
+            $data = $jsonExport->execute($user, $this->databaseId);
 
+            $jsonFile = time() . '_file.json';
 
-        if($databaseModel){
+            return response()->streamDownload(function () use ($data) {
+                echo $data;
+            }, $jsonFile);
 
+        }elseif ($this->exportType === 'sqlite'){
+            $dbName = $sqliteExport->execute($user, $this->databaseId);
 
-            if ($this->exportType === 'json'){
-                $data = $jsonExport->execute($databaseModel->id);
-
-                $jsonFile = time() . '_file.json';
-
-                return response()->streamDownload(function () use ($data) {
-                    echo $data;
-                }, $jsonFile);
-
-            }elseif ($this->exportType === 'sqlite'){
-                $dbName = $sqliteExport->execute($databaseModel->id);
-
-                return response()->download(public_path($dbName))->deleteFileAfterSend(true);
-            }
+            return response()->download(public_path($dbName))->deleteFileAfterSend(true);
         }
-
 
 
     }
@@ -72,18 +64,18 @@ class Databases extends Component
     function viewDatabases(){
         $user = Auth::user();
 
-        $this->databases = $user->databases->fresh();
+       $databaseController = new DataBaseController();
+
+        $this->databases = $databaseController->getOwnedDatabases($user);
 
     }
 
     function viewInvitedDatabases(){
         $user = Auth::user();
 
-        $permissions = $user->permissions->fresh();
+        $databaseController = new DataBaseController();
 
-        foreach ($permissions as $permission){
-            array_push($this->invitedDatabases, $permission->database);
-        }
+        $this->invitedDatabases = $databaseController->getInvitedDatabases($user);
 
     }
 

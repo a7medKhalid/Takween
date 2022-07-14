@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\DataBaseController;
 use App\Http\Controllers\TableController;
 use App\Models\Column;
 use App\Models\DataBase;
@@ -31,7 +32,7 @@ class Tables extends Component
 
         $tableController = new TableController();
 
-        $newTable = $tableController->create($this->database, $this->tableName);
+        $newTable = $tableController->create(Auth::user(), $this->database, $this->tableName);
 
         $this->tables->push($newTable);
         $this->tableName = '';
@@ -43,7 +44,7 @@ class Tables extends Component
 
        $tableController = new TableController();
 
-         $tableController->delete($this->database, $table);
+         $tableController->delete(Auth::user(), $this->database, $table);
 
         $this->viewTables();
 
@@ -61,18 +62,17 @@ class Tables extends Component
 
     public function mount($id){
 
+        $databaseController = new DatabaseController();
+
         $user = Auth::user();
 
-        $this->database = $user->databases->where('id', $id)->first();
+        $this->database = $databaseController->getDatabaseById($user, $id);
 
-        $this->isOwned = 1;
-
-        if (!$this->database){
-            $permission = $user->permissions->where('data_base_id', $id)->first();
-            if ($permission){
-                $this->database = DataBase::find($id);
-                $this->isOwned = 0;
-            }
+        //check if database belongs to user
+        if($this->database?->user_id === $user->id){
+            $this->isOwned = 1;
+        }else{
+            $this->isOwned = 0;
         }
 
         $this->viewTables();

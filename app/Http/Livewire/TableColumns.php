@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Http\Controllers\ColumnController;
+use App\Http\Controllers\TableController;
 use App\Models\Column;
 use App\Models\Table;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,8 @@ class TableColumns extends Component
     public $columnName ;
     public $columnType ;
 
+    public $tableName;
+
     public $customRelationName;
     public $isCustomRelationName;
     public $relationColumnName ;
@@ -29,7 +32,8 @@ class TableColumns extends Component
 
     function viewColumns(){
 
-        $this->columns = $this->table->columns->fresh();
+        $columnsController = new ColumnController();
+        $this->columns = $columnsController->getTableColumns(Auth::user(), $this->table);
 
     }
 
@@ -37,14 +41,20 @@ class TableColumns extends Component
 
         $columnController = new ColumnController();
 
-        if(!$this->isCustomRelationName){
-            $this->relationColumnName = $this->columnName . '_id';
-        }else{
-            $this->relationColumnName = $this->customRelationName;
+        $relationTable = $this->tableName;
+
+        $columnName = $this->columnName;
+
+        if ($this->columnType === 'relation') {
+            if ($this->isCustomRelationName) {
+                $columnName = $this->customRelationName;
+            } else {
+                $columnName = $this->tableName . '_id';
+            }
         }
 
 
-        $newColumn = $columnController->create($this->table, $this->columnType, $this->columnName, $this->relationColumnName);
+        $newColumn = $columnController->create(Auth::user(), $this->table, $this->columnType, $columnName, $relationTable, $this->relationColumnName);
 
 
 
@@ -56,7 +66,9 @@ class TableColumns extends Component
 
     public function updateRelationColumnList(){
 
-        $table = Table::where('data_base_id', $this->databaseId)->where('name', $this->columnName )->first();
+        $tableController = new TableController();
+
+        $table = $tableController->getTableByname(Auth::user(), $this->tableName);
 
         if($table){
             $this->relationColumns = $table->columns;
@@ -70,7 +82,7 @@ class TableColumns extends Component
 
             $columnController = new ColumnController();
 
-            $columnController->delete($this->table, $column);
+            $columnController->delete(Auth::user(), $this->table, $column);
 
             $this->viewColumns();
 
@@ -78,20 +90,16 @@ class TableColumns extends Component
 
     public function mount($id){
 
-        $table = Table::find($id);
+        $tableController = new TableController();
+        $this->table = $tableController->getTableById(Auth::user(), $id);
 
-        $user = Auth::user();
+        $database = $this->table?->database;
 
-        $database = $user->databases->where('id', $table->data_base_id)->first();
-
-        if($database){
-            $this->table = $table;
-            $this->databaseId = $database->id;
-        }
+        $this->databaseId = $database?->id;
 
         $this->viewColumns();
 
-        $this->tables =  $database->tables->map(function ($tables) {
+        $this->tables =  $database?->tables->map(function ($tables) {
             return collect($tables->toArray())
                 ->only( 'name')
                 ->all();

@@ -17,4 +17,9 @@ class Table extends Model
     {
         return $this->hasMany(Column::class);
     }
+
+    public function database()
+    {
+        return $this->belongsTo(Database::class , 'data_base_id');
+    }
 }

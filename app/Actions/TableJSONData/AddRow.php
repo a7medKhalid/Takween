@@ -12,6 +12,10 @@ class AddRow
 
         $row = ['id' => $table->counter];
 
+        if ($rows === null){
+            $rows = [];
+        }
+
 
 //        {{--  to parse relation and number as integers  --}}
 
@@ -29,14 +33,9 @@ class AddRow
 
         $row = array_merge($row, $newRow);
 
-
         array_push($rows, $row);
 
-        $table->data = json_encode($rows,JSON_NUMERIC_CHECK);
-
-        $table->counter += 1;
-
-        $table->save();
+        return $rows;
     }
 
 }

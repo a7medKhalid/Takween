@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Actions\TableJSONData\AddRow;
 use App\Actions\TableJSONData\DeleteRow;
+use App\Http\Controllers\TableController;
 use App\Models\DataBase;
 use App\Models\Table;
 use Illuminate\Support\Facades\Auth;
@@ -38,17 +39,19 @@ class TableFill extends Component
     }
 
 
-    public function addRow(AddRow $addRow){
+    public function addRow(){
 
-        $addRow->execute($this->table, $this->createdRow);
+        $tableController = new TableController();
+        $tableController->updateDataAddRow(Auth::user(), $this->table, $this->createdRow);
 
         $this->viewRows();
 
     }
 
-    public function deleteRow(DeleteRow $deleteRow, $row){
+    public function deleteRow($row){
 
-        $deleteRow->execute($this->table, $row);
+       $tableController = new TableController();
+       $tableController->updateDataDeleteRow(Auth::user(), $this->table, $row);
 
         $this->viewRows();
 
@@ -58,8 +61,8 @@ class TableFill extends Component
 
         $relationName = $column->relationTable;
 
-
-        $table = Table::where('data_base_id', $this->databaseId)->where('name', $relationName )->first();
+        $tableController = new TableController();
+        $table = $tableController->getTableByName(Auth::user(), $relationName);
 
 
         $data = json_decode($table->data, true);
@@ -100,23 +103,12 @@ class TableFill extends Component
 
     public function mount($id){
 
+        $tableController = new TableController();
+        $this->table = $tableController->getTableById(Auth::user(), $id);
 
-        $table = Table::find($id);
+        $database = $this->table?->database;
 
-        $user = Auth::user();
-
-        $database = $user->databases->where('id', $table->data_base_id)->first();
-
-        if($database){
-            $this->table = $table;
-            $this->databaseId = $database->id;
-        }else{
-            $permission = $user->permissions->where('data_base_id', $table->data_base_id)->first();
-            if ($permission){
-                $this->table = $table;
-                $this->databaseId = $table->data_base_id;
-            }
-        }
+        $this->databaseId = $database?->id;
 
         $this->viewRows();
 

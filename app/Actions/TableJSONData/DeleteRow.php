@@ -15,10 +15,7 @@ class DeleteRow
             unset($rows[$key]);
         }
 
-        $table->data = json_encode($rows, JSON_NUMERIC_CHECK);
-
-
-        $table->save();
+        return $rows;
 
     }
 

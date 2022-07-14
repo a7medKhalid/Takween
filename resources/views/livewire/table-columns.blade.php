@@ -29,7 +29,7 @@
 
                             <div class="mt-3">
                                 <label> Choose a a table form the list:
-                                    <select wire:model="columnName" id="tables" wire:change="updateRelationColumnList()">
+                                    <select wire:model="tableName" id="tables" wire:change="updateRelationColumnList()">
                                         <option value="">select table</option>
                                     @foreach($tables as $table)
                                             <option value="{{$table['name']}}">{{$table['name']}}</option>
@@ -119,6 +119,7 @@
                     </tr>
                     </thead>
                     <tbody>
+
                     @foreach($columns as $column)
                         <tr class="hover:bg-grey-lighter">
                             <td class="py-4 px-6 border-b border-grey-light">{{ $column->name }}</td>

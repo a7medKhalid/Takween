@@ -9,20 +9,45 @@ use Illuminate\Support\Facades\Auth;
 
 class PermissionController extends Controller
 {
-    public function create($database, $editorEmail)
-    {
 
+    public function getDatabasePermissions($user, $database){
+
+        //check if user owns database
+        if($database->user_id != $user->id){
+            return false;
+        }
+
+        //get all permissions for database
+        $permissions = $database->permissions->fresh();
+        return $permissions;
+    }
+    public function create($user, $database, $editorEmail)
+    {
+        //check if user owns the database
+        if ($database->user_id != $user->id) {
+            return false;
+        }
 
         $editor = User::where('email', $editorEmail)->first();
 
         $permission = Permission::firstOrCreate([
             'data_base_id' => $database->id,
-            'user_id' => $editor->id,
+            'user_id' => $editor?->id,
         ]);
 
+        return $permission;
+    }
 
-        $editor->assignRole('editor');
+    public function update($user, $permission, $isValid){
+        //check if user owns the database
+        if ($permission->database->user_id != $user->id) {
+            return false;
+        }
+
+        $permission->isValid = $isValid;
+        $permission->save();
 
         return $permission;
+
     }
 }

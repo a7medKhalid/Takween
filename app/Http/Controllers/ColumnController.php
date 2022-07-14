@@ -7,15 +7,31 @@ use Illuminate\Http\Request;
 
 class ColumnController extends Controller
 {
-    public function create($table, $columnType, $columnName , $relationColumnName = null ){
+
+    public function getTableColumns($user, $table){
+
+       //check if user owns table database
+       if ($table?->database->user_id != $user->id){
+           return null;
+       }
+
+       $columns = $table->columns->fresh();
+
+       return $columns;
+    }
+    public function create($user, $table, $columnType, $columnName , $relationTable, $relationColumnName ){
+
+        //check if table database belongs to user
+        if($table->database->user_id != $user->id){
+            return false;
+        }
+
         if($columnType === 'relation'){
-
-
             $newColumn = Column::create([
-                'name' => $relationColumnName,
+                'name' => $columnName,
                 'type' => $columnType,
                 'relationColumnName' => $relationColumnName,
-                'relationTable' => $columnName
+                'relationTable' => $relationTable
             ]);
         }else{
 
@@ -25,7 +41,7 @@ class ColumnController extends Controller
             ]);
         }
 
-        //add null values for pervious data
+        //add null values for previous data
         $table->fresh();
 
         $rows = json_decode($table->data, true);
@@ -54,7 +70,13 @@ class ColumnController extends Controller
         return $newColumn;
     }
 
-    public function delete($table, $column){
+    public function delete($user, $table, $column){
+
+        //check if table database belongs to user
+        if($table->database->user_id != $user->id){
+            return false;
+        }
+
 
         $columnModel = $table->columns->where('id', $column['id'])->first();
 

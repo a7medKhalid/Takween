@@ -2,6 +2,7 @@
 
 namespace App\Actions\ExportDatabase;
 
+use App\Http\Controllers\DataBaseController;
 use App\Http\Controllers\JSON2SQL;
 use App\Models\DataBase;
 
@@ -158,10 +159,12 @@ class SQLiteExport
     ];
 
 
-    public function execute($database_id){
+    public function execute($user, $database_id){
 
-            //get database
-        $database = DataBase::find($database_id);
+        //get database
+        $databaseController = new DataBaseController();
+        $database = $databaseController->getDatabaseById($user, $database_id);
+
 
         $dbName = $database->name . time() . ".db";
 

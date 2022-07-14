@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\DataBaseController;
 use App\Http\Controllers\PermissionController;
 use App\Models\Permission;
 use App\Models\User;
@@ -20,16 +21,16 @@ class Editors extends Component
 
         $this->database->fresh();
 
-        $this->editors = $this->database->permissions->fresh();
+        $permissionController = new PermissionController();
 
+        $this->editors = $permissionController->getDatabasePermissions(Auth::user(), $this->database);
     }
 
     public function addEditor(){
-        $user = Auth::user();
 
         $permissionController = new PermissionController();
 
-        $permissionController->create($this->database, $this->editorEmail);
+        $permissionController->create(Auth::user(), $this->database, $this->editorEmail);
 
         $this->viewEditors();
 
@@ -39,24 +40,21 @@ class Editors extends Component
 
     public function deactivateEditor($editor){
 
+        $permissionModel = $this->database->permissions->find($editor['id']);
 
-        $editorModel = $this->database->permissions->find($editor['id']);
-
-        $editorModel->isValid = false;
-
-        $editorModel->save();
+        $permissionController = new PermissionController();
+        $permissionController->update(Auth::user(), $permissionModel, false);
 
         $this->viewEditors();
     }
 
     public function activateEditor($editor){
 
+        $permissionModel = $this->database->permissions->find($editor['id']);
 
-        $editorModel = $this->database->permissions->find($editor['id']);
 
-        $editorModel->isValid = true;
-
-        $editorModel->save();
+        $permissionController = new PermissionController();
+        $permissionController->update(Auth::user(), $permissionModel, true);
 
         $this->viewEditors();
     }
@@ -67,7 +65,8 @@ class Editors extends Component
 
         $user = Auth::user();
 
-        $this->database = $user->databases->where('id', $id)->first();
+        $databaseController = new DataBaseController();
+        $this->database = $databaseController->getDatabaseById($user, $id);
 
 
         $this->viewEditors();
