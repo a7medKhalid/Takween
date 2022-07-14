@@ -2,14 +2,16 @@
 
 namespace App\Actions\ExportDatabase;
 
+use App\Http\Controllers\DataBaseController;
 use App\Models\DataBase;
 
 class JSONExport
 {
-    public function execute($database_id){
+    public function execute($user, $database_id){
 
         //get database
-        $database = DataBase::find($database_id);
+        $databaseController = new DataBaseController();
+        $database = $databaseController->getDatabaseById($user, $database_id);
 
         $tables = $database->tables;
 

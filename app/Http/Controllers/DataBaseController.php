@@ -10,7 +10,16 @@ class DataBaseController extends Controller
 
     public function getDatabaseById($user, $id){
 
-        $database =$user->databases->find($id);
+        $database = $user->databases->find($id);
+
+        if (!$database){
+           //check if user has permission to access database
+              $permission = $user->permissions->where('data_base_id', $id)->where('isValid', true)->first();
+
+              if ($permission){
+                    $database = $permission->database;
+              }
+        }
 
         return $database;
     }

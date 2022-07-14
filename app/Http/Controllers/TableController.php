@@ -15,7 +15,12 @@ class TableController extends Controller
         $table = Table::find($tableId);
 
         if($table?->database->user_id != $user->id){
-            return null;
+
+            $permission = $user->permissions->where('data_base_id', $table->data_base_id)->where('isValid', true)->first();
+
+            if (!$permission){
+                return null;
+            }
         }
 
         return $table;
@@ -26,7 +31,11 @@ class TableController extends Controller
         $table = Table::where('name', $tableName)->first();
 
         if($table?->database->user_id != $user->id){
-            return false;
+            $permission = $user->permissions->where('data_base_id', $table->data_base_id)->where('isValid', true)->first();
+
+            if (!$permission){
+                return null;
+            }
         }
 
         return $table;
@@ -75,7 +84,11 @@ class TableController extends Controller
 
         //check if user owns table database
         if($table->database->user_id != $user->id){
-            return false;
+            $permission = $user->permissions->where('data_base_id', $table->data_base_id)->where('isValid', true)->first();
+
+            if (!$permission){
+                return null;
+            }
         }
 
         $rows = $addRow->execute($table, $newRow);
@@ -93,7 +106,11 @@ class TableController extends Controller
 
         //check if user owns table database
         if($table->database->user_id != $user->id){
-            return false;
+            $permission = $user->permissions->where('data_base_id', $table->data_base_id)->where('isValid', true)->first();
+
+            if (!$permission){
+                return null;
+            }
         }
 
         $rows = $deleteRow->execute($table, $row);
