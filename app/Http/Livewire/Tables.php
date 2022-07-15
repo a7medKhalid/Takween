@@ -24,7 +24,7 @@ class Tables extends Component
 
     function viewTables(){
 
-        $this->tables = $this->database->tables->fresh();
+        $this->tables = $this->database->tables()->select('id', 'name')->get();
 
     }
 
@@ -44,7 +44,7 @@ class Tables extends Component
 
        $tableController = new TableController();
 
-         $tableController->delete(Auth::user(), $this->database, $table);
+         $tableController->delete(Auth::user(),$table['id']);
 
         $this->viewTables();
 

@@ -19,7 +19,7 @@ class ColumnController extends Controller
 
        return $columns;
     }
-    public function create($user, $table, $columnType, $columnName , $relationTable, $relationColumnName ){
+    public function create($user, $table, $columnType, $columnName , $relationTable = null, $relationColumnName = null){
 
         //check if table database belongs to user
         if($table->database->user_id != $user->id){

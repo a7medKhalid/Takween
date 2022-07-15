@@ -66,14 +66,16 @@ class TableController extends Controller
 
     }
 
-    public function delete($user, $database, $table){
+    public function delete($user, $tableId){
+
+
+        $tableModel = Table::find($tableId);
 
         //check if database belongs to user
-        if($database->user_id != $user->id){
+        if($tableModel->database->user_id != $user->id){
             return false;
         }
 
-        $tableModel = $database->tables->where('id', $table['id'])->first();
 
         $tableModel->delete();
     }
