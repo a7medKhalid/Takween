@@ -25,11 +25,15 @@ class TableFill extends Component
 
     public $createdRow=[];
 
+    public $pageNumber = 1;
+
     function viewRows(){
 
-        $this->table->fresh();
+        $chunkController = new ChunkController();
 
-        $this->rows = json_decode($this->table->data, true);
+        $chunk = $chunkController->getChunkByOrder(Auth::user() , $this->table, $this->pageNumber);
+
+        $this->rows = json_decode($chunk->data, true);
 
         if(!$this->rows){
             $this->rows = [];
@@ -37,6 +41,21 @@ class TableFill extends Component
 
         $this->columns = $this->table->columns->fresh();
 
+    }
+
+    public function next(){
+        $this->pageNumber++;
+        $this->viewRows();
+    }
+
+    public function previous(){
+        $this->pageNumber--;
+        $this->viewRows();
+    }
+
+    //on pageNumber change
+    public function updatedPageNumber(){
+        $this->viewRows();
     }
 
 
@@ -51,8 +70,8 @@ class TableFill extends Component
 
     public function deleteRow($row){
 
-       $tableController = new TableController();
-       $tableController->updateDataDeleteRow(Auth::user(), $this->table, $row);
+        $chunkController= new ChunkController();
+       $chunkController->updateDataDeleteRow(Auth::user(), $this->table, $row);
 
         $this->viewRows();
 

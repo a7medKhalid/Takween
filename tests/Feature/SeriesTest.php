@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Actions\ExportDatabase\SQLiteExport;
+use App\Http\Controllers\ChunkController;
 use App\Http\Controllers\ColumnController;
 use App\Http\Controllers\DataBaseController;
 use App\Http\Controllers\PermissionController;
@@ -107,130 +108,130 @@ class SeriesTest extends TestCase
 
 
         //add row for first table
-        $tableController = new TableController();
+        $chunkController = new ChunkController();
 
-//        //temp seeder
-//        for ($i = 0; $i < 10000; $i++) {
-//            $tableController->updateDataAddRow($user, $table1, ['test' => 'test']);
-//        }
-//
-//        for ($i = 0; $i < 5000; $i++) {
+        //temp seeder
+        for ($i = 0; $i < 10000; $i++) {
+            $chunkController->updateDataAddRow($user, $table1, ['test' => 'test']);
+        }
+
+//        for ($i = 0; $i < 2500; $i++) {
 //            $tableController->updateDataAddRow($user, $table2, ['test' => 'test', 'test_id' => $i + 1]);
 //        }
 
-        $tableController->updateDataAddRow($user, $table1, ['test' => 'test']);
-
-        $table1 = $table1->fresh();
-        $rows = $table1->data;
-        $this->assertJsonStringEqualsJsonString("[{\"id\": 1, \"test\": \"test\"}]", $rows);
-
-        $rows = json_decode($rows, true);
-
-        //test if user can delete row from table1
-        $tableController->updateDataDeleteRow($user, $table1, $rows[0]);
-
-        $this->assertJsonStringNotEqualsJsonString("[{\"id\": 1, \"test\": \"test\"}]", $table1->data);
-
-
-        //add row for second table
-        $tableController->updateDataAddRow($user, $table2, ['test' => 'test', 'test_id' => $table1->id]);
-
-
-        $table2 = $table2->fresh();
-        $rows = $table2->data;
-        $this->assertJsonStringEqualsJsonString("[{\"id\": 1,\"test\": \"test\",\"test_id\":1}]", $rows);
-
-
-
-    }
-
-    //test if user can add editor to database
-    public function test_user_can_add_editor_to_database()
-    {
-        $user = User::whereName('Test User')->first();
-
-        $database = DataBase::whereName('test')->first();
-
-        $permissionController = new PermissionController();
-
-        //create editor user
-        $editor = User::factory()->create(['name' => 'editor' , 'email' => 'editor@test.com']);
-
-        $permissionController->create($user, $database, $editor->email);
-
-        $this->assertDatabaseHas('permissions', ['user_id' => $editor->id, 'data_base_id' => $database->id]);
-
-    }
-
-    //test if editor can add and delete table rows
-    public function test_editor_can_add_and_delete_row_to_table()
-    {
-        $user = User::whereName('editor')->first();
-
-        $database = DataBase::whereName('test')->first();
-
-        $table1 = Table::whereName('test')->first();
-
-
-        //add row for first table
-        $tableController = new TableController();
-
-
-        $tableController->updateDataAddRow($user, $table1, ['test' => 'test']);
-
-        $table1 = $table1->fresh();
-        $rows = $table1->data;
-        $this->assertJsonStringEqualsJsonString("[{\"id\": 2, \"test\": \"test\"}]", $rows);
-
-        $rows = json_decode($rows, true);
-
-        //test if user can delete row from table1
-        $tableController->updateDataDeleteRow($user, $table1, $rows[0]);
-
-        $this->assertJsonStringNotEqualsJsonString("[{\"id\": 1, \"test\": \"test\"}]", $table1->data);
-
-    }
-
-    //TODO:test if user can export database
-//    public function test_user_can_export_database(){
+//        $tableController->updateDataAddRow($user, $table1, ['test' => 'test']);
 //
+//        $table1 = $table1->fresh();
+//        $rows = $table1->data;
+//        $this->assertJsonStringEqualsJsonString("[{\"id\": 1, \"test\": \"test\"}]", $rows);
+//
+//        $rows = json_decode($rows, true);
+//
+//        //test if user can delete row from table1
+//        $tableController->updateDataDeleteRow($user, $table1, $rows[0]);
+//
+//        $this->assertJsonStringNotEqualsJsonString("[{\"id\": 1, \"test\": \"test\"}]", $table1->data);
+//
+//
+//        //add row for second table
+//        $tableController->updateDataAddRow($user, $table2, ['test' => 'test', 'test_id' => $table1->id]);
+//
+//
+//        $table2 = $table2->fresh();
+//        $rows = $table2->data;
+//        $this->assertJsonStringEqualsJsonString("[{\"id\": 1,\"test\": \"test\",\"test_id\":1}]", $rows);
+
+
+
+    }
+//
+//    //test if user can add editor to database
+//    public function test_user_can_add_editor_to_database()
+//    {
 //        $user = User::whereName('Test User')->first();
 //
 //        $database = DataBase::whereName('test')->first();
 //
-//        $SQLiteExport = new SQLiteExport();
+//        $permissionController = new PermissionController();
 //
-//        $SQLiteExport->execute($user, $database);
+//        //create editor user
+//        $editor = User::factory()->create(['name' => 'editor' , 'email' => 'editor@test.com']);
+//
+//        $permissionController->create($user, $database, $editor->email);
+//
+//        $this->assertDatabaseHas('permissions', ['user_id' => $editor->id, 'data_base_id' => $database->id]);
 //
 //    }
-
-    //test if user can delete table
-    public function test_user_can_delete_table()
-    {
-        $user = User::whereName('Test User')->first();
-
-        $database = DataBase::whereName('test')->first();
-
-        $tableController = new TableController();
-
-        $tableController->delete($user, 1);
-
-        $this->assertDatabaseMissing('tables', ['name' => 'test']);
-
-    }
-
-    //test if user can delete database
-    public function test_user_can_delete_database(){
-        $user = User::whereName('Test User')->first();
-
-        $database = DataBase::whereName('test')->first();
-
-        $databaseController = new DatabaseController();
-
-        $databaseController->delete($user, $database->id);
-
-        $this->assertDatabaseMissing('data_bases', ['name' => 'test']);
-
-    }
+//
+//    //test if editor can add and delete table rows
+//    public function test_editor_can_add_and_delete_row_to_table()
+//    {
+//        $user = User::whereName('editor')->first();
+//
+//        $database = DataBase::whereName('test')->first();
+//
+//        $table1 = Table::whereName('test')->first();
+//
+//
+//        //add row for first table
+//        $tableController = new TableController();
+//
+//
+//        $tableController->updateDataAddRow($user, $table1, ['test' => 'test']);
+//
+//        $table1 = $table1->fresh();
+//        $rows = $table1->data;
+//        $this->assertJsonStringEqualsJsonString("[{\"id\": 2, \"test\": \"test\"}]", $rows);
+//
+//        $rows = json_decode($rows, true);
+//
+//        //test if user can delete row from table1
+//        $tableController->updateDataDeleteRow($user, $table1, $rows[0]);
+//
+//        $this->assertJsonStringNotEqualsJsonString("[{\"id\": 1, \"test\": \"test\"}]", $table1->data);
+//
+//    }
+//
+//    //TODO:test if user can export database
+////    public function test_user_can_export_database(){
+////
+////        $user = User::whereName('Test User')->first();
+////
+////        $database = DataBase::whereName('test')->first();
+////
+////        $SQLiteExport = new SQLiteExport();
+////
+////        $SQLiteExport->execute($user, $database);
+////
+////    }
+//
+//    //test if user can delete table
+//    public function test_user_can_delete_table()
+//    {
+//        $user = User::whereName('Test User')->first();
+//
+//        $database = DataBase::whereName('test')->first();
+//
+//        $tableController = new TableController();
+//
+//        $tableController->delete($user, 1);
+//
+//        $this->assertDatabaseMissing('tables', ['name' => 'test']);
+//
+//    }
+//
+//    //test if user can delete database
+//    public function test_user_can_delete_database(){
+//        $user = User::whereName('Test User')->first();
+//
+//        $database = DataBase::whereName('test')->first();
+//
+//        $databaseController = new DatabaseController();
+//
+//        $databaseController->delete($user, $database->id);
+//
+//        $this->assertDatabaseMissing('data_bases', ['name' => 'test']);
+//
+//    }
 
 }

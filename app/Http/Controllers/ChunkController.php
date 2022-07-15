@@ -30,6 +30,23 @@ class ChunkController extends Controller
 
     }
 
+    public function getChunkByOrder($user, $table, $order){
+
+        $chunk = Chunk::where('table_id', $table->id)->where('order', $order)->first();
+
+        //check if user can view chunk
+        if($table?->database->user_id != $user->id){
+
+            $permission = $user->permissions->where('data_base_id', $table->data_base_id)->where('isValid', true)->first();
+
+            if (!$permission){
+                return null;
+            }
+        }
+
+        return $chunk;
+    }
+
     public function create($user, $table){
         //check if user can create chunk
         if($table?->database->user_id != $user->id){
@@ -92,10 +109,17 @@ class ChunkController extends Controller
             }
         }
 
-        $rows = $deleteRow->execute($table, $row);
+        $chunk = $this->getChunkByRowId($user, $table, $row['id']);
 
-        $table->data = json_encode($rows, JSON_NUMERIC_CHECK);
+        if(!$chunk){
+            //create chunk
+            return false;
+        }
 
-        $table->save();
+        $rows = $deleteRow->execute($chunk ,$row);
+
+        $chunk->data = json_encode($rows, JSON_NUMERIC_CHECK);
+
+        $chunk->save();
     }
 }
