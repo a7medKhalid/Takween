@@ -7,6 +7,7 @@
                 <form wire:submit.prevent="addRow()" class="flex flex-col items-center w-full mb-4 md:flex-row md:px-16">
 
                     <div class="mt-3">
+                        {{-- loop to show all row columns                       --}}
                         @foreach($columns as $column)
 
 

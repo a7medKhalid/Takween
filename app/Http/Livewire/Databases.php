@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Http\Controllers\ExportDataBaseController;
+use App\Actions\ExportDatabase\JSONExport;
+use App\Actions\ExportDatabase\SQLiteExport;
+use App\Http\Controllers\DataBaseController;
 use App\Models\DataBase;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Auth;
@@ -36,35 +38,24 @@ class Databases extends Component
     $this->hideModal = true;
     }
 
-    public function exportDatabase(){
+    public function exportDatabase(SQLiteExport $sqliteExport, JSONExport $jsonExport){
 
         $user = Auth::user();
 
-        $databaseModel = $user->databases->where('id', $this->databaseId)->first();
+        if ($this->exportType === 'json'){
+            $data = $jsonExport->execute($user, $this->databaseId);
 
+            $jsonFile = time() . '_file.json';
 
-        if($databaseModel){
+            return response()->streamDownload(function () use ($data) {
+                echo $data;
+            }, $jsonFile);
 
+        }elseif ($this->exportType === 'sqlite'){
+            $dbName = $sqliteExport->execute($user, $this->databaseId);
 
-            if ($this->exportType === 'json'){
-                $data = (new \App\Http\Controllers\ExportDataBaseController)->jsonExport($databaseModel->id);
-
-                $jsongFile = time() . '_file.json';
-
-                return response()->streamDownload(function () use ($data) {
-                    echo $data;
-                }, $jsongFile);
-
-            }elseif ($this->exportType === 'sqlite'){
-                $dbName = (new \App\Http\Controllers\ExportDataBaseController)->sqliteExport($databaseModel->id);
-                //download file with database name
-
-//                dd(public_path($dbName));
-
-                return response()->download(public_path($dbName));
-            }
+            return response()->download(public_path($dbName))->deleteFileAfterSend(true);
         }
-
 
 
     }
@@ -73,18 +64,18 @@ class Databases extends Component
     function viewDatabases(){
         $user = Auth::user();
 
-        $this->databases = $user->databases->fresh();
+       $databaseController = new DataBaseController();
+
+        $this->databases = $databaseController->getOwnedDatabases($user);
 
     }
 
     function viewInvitedDatabases(){
         $user = Auth::user();
 
-        $permissions = $user->permissions->fresh();
+        $databaseController = new DataBaseController();
 
-        foreach ($permissions as $permission){
-            array_push($this->invitedDatabases, $permission->database);
-        }
+        $this->invitedDatabases = $databaseController->getInvitedDatabases($user);
 
     }
 
@@ -92,11 +83,8 @@ class Databases extends Component
 
         $user = Auth::user();
 
-        $newDatabase = Database::create([
-            'name' => $this->databaseName
-        ]);
-
-        $user->databases()->save($newDatabase);
+        $databaseController = new DataBaseController();
+        $newDatabase = $databaseController->create($user, $this->databaseName);
 
         $this->databases->push($newDatabase);
 
@@ -109,9 +97,9 @@ class Databases extends Component
 
         $user = Auth::user();
 
-        $databaseModel = $user->databases->where('id', $database['id'])->first();
+        $databaseController = new DataBaseController();
 
-        $databaseModel->delete();
+        $databaseController->delete($user, $database['id']);
 
         $this->viewDatabases();
 

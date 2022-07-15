@@ -2,6 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Actions\TableJSONData\AddRow;
+use App\Actions\TableJSONData\DeleteRow;
+use App\Http\Controllers\TableController;
 use App\Models\DataBase;
 use App\Models\Table;
 use Illuminate\Support\Facades\Auth;
@@ -38,55 +41,19 @@ class TableFill extends Component
 
     public function addRow(){
 
-
-        $row = ['id' => $this->table->counter];
-
-
-//        {{--  to parse relation and number as integers  --}}
-
-//        dd($this->createdRow);
-
-        $integerColumns = [];
-        foreach ($this->columns as $column){
-            if ($column->type !== 'id' and in_array($column->type, array('number', 'checkbox', 'relation'))) {
-                array_push($integerColumns,$column->name);
-            }
-        }
-
-        foreach ($integerColumns as $integerColumn) {
-            $this->createdRow[$integerColumn] = intval($this->createdRow[$integerColumn]);
-        }
-
-        $row = array_merge($row, $this->createdRow);
-
+        $tableController = new TableController();
+        $tableController->updateDataAddRow(Auth::user(), $this->table, $this->createdRow);
 
         $this->viewRows();
-
-        array_push($this->rows, $row);
-
-        $this->table->data = json_encode($this->rows,JSON_NUMERIC_CHECK);
-
-        $this->table->counter += 1;
-
-        $this->table->save();
 
     }
 
     public function deleteRow($row){
 
-        $key = array_search($row, $this->rows);
+       $tableController = new TableController();
+       $tableController->updateDataDeleteRow(Auth::user(), $this->table, $row);
 
         $this->viewRows();
-
-        if ($key !== false) {
-            unset($this->rows[$key]);
-        }
-
-
-        $this->table->data = json_encode($this->rows);
-
-        $this->table->save();
-
 
     }
 
@@ -94,8 +61,8 @@ class TableFill extends Component
 
         $relationName = $column->relationTable;
 
-
-        $table = Table::where('data_base_id', $this->databaseId)->where('name', $relationName )->first();
+        $tableController = new TableController();
+        $table = $tableController->getTableByName(Auth::user(), $relationName);
 
 
         $data = json_decode($table->data, true);
@@ -136,23 +103,12 @@ class TableFill extends Component
 
     public function mount($id){
 
+        $tableController = new TableController();
+        $this->table = $tableController->getTableById(Auth::user(), $id);
 
-        $table = Table::find($id);
+        $database = $this->table?->database;
 
-        $user = Auth::user();
-
-        $database = $user->databases->where('id', $table->data_base_id)->first();
-
-        if($database){
-            $this->table = $table;
-            $this->databaseId = $database->id;
-        }else{
-            $permission = $user->permissions->where('data_base_id', $table->data_base_id)->first();
-            if ($permission){
-                $this->table = $table;
-                $this->databaseId = $table->data_base_id;
-            }
-        }
+        $this->databaseId = $database?->id;
 
         $this->viewRows();
 

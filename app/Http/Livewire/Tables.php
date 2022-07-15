@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\DataBaseController;
+use App\Http\Controllers\TableController;
 use App\Models\Column;
 use App\Models\DataBase;
 use App\Models\Table;
@@ -22,37 +24,27 @@ class Tables extends Component
 
     function viewTables(){
 
-        $this->tables = $this->database->tables->fresh();
+        $this->tables = $this->database->tables()->select('id', 'name')->get();
 
     }
 
     public function addTable(){
 
-        $newTable = Table::create([
-            'name' => $this->tableName
-        ]);
+        $tableController = new TableController();
 
-        $this->database->tables()->save($newTable);
+        $newTable = $tableController->create(Auth::user(), $this->database, $this->tableName);
 
         $this->tables->push($newTable);
-
         $this->tableName = '';
-
-        $idColumn = Column::create([
-            'name' => 'id',
-            'type' => 'id'
-        ]);
-
-        $newTable->columns()->save($idColumn);
 
 
     }
 
     public function deleteTable($table){
 
-        $tableModel = $this->database->tables->where('id', $table['id'])->first();
+       $tableController = new TableController();
 
-        $tableModel->delete();
+         $tableController->delete(Auth::user(),$table['id']);
 
         $this->viewTables();
 
@@ -70,18 +62,17 @@ class Tables extends Component
 
     public function mount($id){
 
+        $databaseController = new DatabaseController();
+
         $user = Auth::user();
 
-        $this->database = $user->databases->where('id', $id)->first();
+        $this->database = $databaseController->getDatabaseById($user, $id);
 
-        $this->isOwned = 1;
-
-        if (!$this->database){
-            $permission = $user->permissions->where('data_base_id', $id)->first();
-            if ($permission){
-                $this->database = DataBase::find($id);
-                $this->isOwned = 0;
-            }
+        //check if database belongs to user
+        if($this->database?->user_id === $user->id){
+            $this->isOwned = 1;
+        }else{
+            $this->isOwned = 0;
         }
 
         $this->viewTables();
