@@ -80,46 +80,6 @@ class TableController extends Controller
         $tableModel->delete();
     }
 
-    public function updateDataAddRow($user, $table, $newRow){
 
-        $addRow = new AddRow();
-
-        //check if user owns table database
-        if($table->database->user_id != $user->id){
-            $permission = $user->permissions->where('data_base_id', $table->data_base_id)->where('isValid', true)->first();
-
-            if (!$permission){
-                return null;
-            }
-        }
-
-        $rows = $addRow->execute($table, $newRow);
-
-        $table->data = json_encode($rows,JSON_NUMERIC_CHECK);
-
-        $table->counter += 1;
-
-        $table->save();
-    }
-
-    public function updateDataDeleteRow($user, $table, $row){
-
-        $deleteRow = new DeleteRow();
-
-        //check if user owns table database
-        if($table->database->user_id != $user->id){
-            $permission = $user->permissions->where('data_base_id', $table->data_base_id)->where('isValid', true)->first();
-
-            if (!$permission){
-                return null;
-            }
-        }
-
-        $rows = $deleteRow->execute($table, $row);
-
-        $table->data = json_encode($rows, JSON_NUMERIC_CHECK);
-
-        $table->save();
-    }
 
 }

@@ -22,4 +22,8 @@ class Table extends Model
     {
         return $this->belongsTo(Database::class , 'data_base_id');
     }
+
+    public function chunks(){
+        return $this->hasMany(Chunk::class);
+    }
 }

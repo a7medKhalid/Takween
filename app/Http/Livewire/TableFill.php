@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Actions\TableJSONData\AddRow;
 use App\Actions\TableJSONData\DeleteRow;
+use App\Http\Controllers\ChunkController;
 use App\Http\Controllers\TableController;
 use App\Models\DataBase;
 use App\Models\Table;
@@ -41,8 +42,8 @@ class TableFill extends Component
 
     public function addRow(){
 
-        $tableController = new TableController();
-        $tableController->updateDataAddRow(Auth::user(), $this->table, $this->createdRow);
+        $chunkController = new ChunkController();
+        $chunkController->updateDataAddRow(Auth::user(), $this->table, $this->createdRow);
 
         $this->viewRows();
 

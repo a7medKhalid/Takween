@@ -4,11 +4,11 @@ namespace App\Actions\TableJSONData;
 
 class AddRow
 {
-    public function execute($table, $newRow)
+    public function execute($table, $chunk, $newRow)
     {
         $columns = $table->columns;
 
-        $rows = json_decode($table->data, true);
+        $rows = json_decode($chunk->data, true);
 
         $row = ['id' => $table->counter];
 

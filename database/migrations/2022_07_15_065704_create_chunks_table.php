@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tables', function (Blueprint $table) {
+        Schema::create('chunks', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
 
-            $table->string('name');
+            $table->unsignedInteger('order')->default(1);
+            $table->json('data')->nullable();
 
-            $table->integer('counter')->default(1);
-
-            $table->foreignId('data_base_id')->nullable();
+            $table->foreignId('table_id')->nullable();
         });
     }
 
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tables');
+        Schema::dropIfExists('chunks');
     }
 };
