@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('name');
 
             $table->foreignId('user_id')->nullable();
+
+            $table->integer('rowsCount')->default(0);
         });
     }
 

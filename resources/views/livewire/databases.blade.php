@@ -110,7 +110,7 @@
                     @foreach($databases as $database)
                         <tr class="hover:bg-grey-lighter">
                             <td class="py-4 px-6 border-b border-grey-light">{{ $database->name }}</td>
-                            <td class="py-4 px-6 border-b border-grey-light">1000</td>
+                            <td class="py-4 px-6 border-b border-grey-light">{{ $database->rowsCount }}</td>
 
                             <td class="py-4 px-6 border-b border-grey-light">
                                 <button wire:click="redirectToTables({{ $database->id }})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">tables</button>

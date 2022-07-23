@@ -39,8 +39,7 @@
                     <thead>
                     <tr>
                         <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">name</th>
-                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">rows</th>
-
+{{--                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">rows</th>--}}
                         <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
                     </tr>
                     </thead>
@@ -48,7 +47,7 @@
                     @foreach($tables as $table)
                         <tr class="hover:bg-grey-lighter">
                             <td class="py-4 px-6 border-b border-grey-light">{{ $table->name }}</td>
-                            <td class="py-4 px-6 border-b border-grey-light">1000</td>
+{{--                            <td class="py-4 px-6 border-b border-grey-light">1000</td>--}}
 
                             <td class="py-4 px-6 border-b border-grey-light">
                                 <button wire:click="redirectToTableFill({{ $table->id }})" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark">fill</button>
