@@ -33,7 +33,7 @@ class TableFill extends Component
 
         $chunk = $chunkController->getChunkByOrder(Auth::user() , $this->table, $this->pageNumber);
 
-        $this->rows = json_decode($chunk->data, true);
+        $this->rows = json_decode($chunk?->data, true);
 
         if(!$this->rows){
             $this->rows = [];

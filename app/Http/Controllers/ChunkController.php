@@ -48,10 +48,15 @@ class ChunkController extends Controller
     }
 
     public function create($user, $table){
-        //check if user can create chunk
-        if($table?->database->user_id != $user->id){
-            return false;
+        //check if user owns table database
+        if($table->database->user_id != $user->id){
+            $permission = $user->permissions->where('data_base_id', $table->data_base_id)->where('isValid', true)->first();
+
+            if (!$permission){
+                return null;
+            }
         }
+
 
         $newChunk = Chunk::firstOrCreate([
             'order' => $table->chunks->count() + 1,
