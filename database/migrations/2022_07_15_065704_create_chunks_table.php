@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedInteger('order')->default(1);
             $table->json('data')->nullable();
 
-            $table->foreignId('table_id')->nullable();
+            $table->foreignId('table_id')->nullable()->constrained()->onDelete('cascade');
         });
     }
 

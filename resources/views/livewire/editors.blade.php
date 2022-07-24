@@ -4,6 +4,14 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <a class="flex items-center hover:text-blue-500 hover:underline transition duration-300 mt-4 ml-4" href="#" onClick="history.go(-1)">
+                    <svg class="rotate-180 h-4" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"></path>
+                        <path d="M12 5l7 7-7 7"></path>
+                    </svg>
+                    <p class="ml-2  text-xs  " >Return </p>
+
+                </a>
                 <form wire:submit="addEditor" class="flex flex-col items-center w-full mb-4 md:flex-row md:px-16">
                     <div class="mt-3">
                         <label> Editor Email: </label>

@@ -8,11 +8,11 @@ class DeleteRow
     public function execute($chunk, $row){
 
 
-        $dataBase = $chunk->table->database;
+        $table = $chunk->table;
 
         //decrease database rows count
-        $dataBase->rowsCount -= 1;
-        $dataBase->save();
+        $table->rowsCount -= 1;
+        $table->save();
 
         $rows = json_decode($chunk->data, true);
 

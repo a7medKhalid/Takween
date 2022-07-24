@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('type', ['id', 'text', 'number', 'checkbox' , 'tel', 'email' ,'url' ,'date'  ,'relation']);
             $table->string('relationColumnName')->nullable(); //if type is relation, this is column that will be viewed when adding relation for UX purposes
 
-            $table->foreignId('table_id')->nullable();
+            $table->foreignId('table_id')->nullable()->constrained()->onDelete('cascade');
         });
     }
 
