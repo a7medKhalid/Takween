@@ -43,6 +43,7 @@ class DataBaseController extends Controller
         return $invitedDatabases;
     }
     public function create($user, $databaseName){
+
         $newDatabase = Database::create([
             'name' => $databaseName
         ]);

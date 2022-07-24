@@ -84,6 +84,11 @@
                         >
                             Add Database
                         </button>
+                        @if($errors->has('database'))
+                            <span class="text-red-500">{{ $errors->first('database') }}</span>
+
+                        @endif
+
                     </div>
                 </form>
             </div>

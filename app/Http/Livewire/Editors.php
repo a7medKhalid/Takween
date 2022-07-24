@@ -28,6 +28,12 @@ class Editors extends Component
 
     public function addEditor(){
 
+        //demo constraints
+        $isEditor = $this->database->permissions->first();
+        if ($isEditor){
+            $isEditor->delete();
+        }
+
         $permissionController = new PermissionController();
 
         $permissionController->create(Auth::user(), $this->database, $this->editorEmail);

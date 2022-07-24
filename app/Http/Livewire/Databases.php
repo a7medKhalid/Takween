@@ -92,7 +92,15 @@ class Databases extends Component
 
     public function addDataBase(){
 
+
         $user = Auth::user();
+
+        //demo constraints
+        $isDatabase = $user->databases->first();
+        if ($isDatabase){
+            $this->addError('database', 'You can not add more than one database in starter subscription');
+            return ;
+        }
 
         $databaseController = new DataBaseController();
         $newDatabase = $databaseController->create($user, $this->databaseName);

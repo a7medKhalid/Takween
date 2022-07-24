@@ -9,7 +9,7 @@
                         <path d="M5 12h14"></path>
                         <path d="M12 5l7 7-7 7"></path>
                     </svg>
-                    <p class="ml-2  text-xs  " >Return </p>
+                    <p class="ml-2 text-xs" >Return </p>
 
                 </a>
                 <form wire:submit.prevent="addRow()" class="flex flex-col items-center w-full mb-4 md:flex-row md:px-16">
@@ -70,6 +70,12 @@
                         >
                             Add Row
                         </button>
+
+
+                        @if($errors->has('rows'))
+                            <span class="text-red-500">{{ $errors->first('rows') }}</span>
+
+                        @endif
                     </div>
 
                 </form>
@@ -82,15 +88,15 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
                 <nav class="m-4 items-center" aria-label="Page navigation example">
-                    <ul class="inline-flex -space-x-px">
+                    <ul class="flex items-center inline-flex -space-x-px">
                         <li>
-                            <a wire:click="previous()" class="py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                            <a wire:click="previous()" class="py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">Previous</a>
                         </li>
                         <li>
-                            <input wire:model="pageNumber" class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                            <input wire:model="pageNumber" class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">
                         </li>
                         <li>
-                            <a wire:click="next()" class="py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                            <a wire:click="next()" class="py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">Next</a>
                         </li>
                     </ul>
                 </nav>

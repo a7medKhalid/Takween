@@ -60,6 +60,13 @@ class TableFill extends Component
 
 
     public function addRow(){
+        //demo constraints
+        $database = $this->table->database;
+        $rowsCount = $database->rowsCount;
+        if ($rowsCount >= 5000){
+            $this->addError('rows', 'You can not add more than 5000 rows in starter subscription');
+            return;
+        }
 
         $chunkController = new ChunkController();
         $chunkController->updateDataAddRow(Auth::user(), $this->table, $this->createdRow);
@@ -79,19 +86,22 @@ class TableFill extends Component
 
     public function getParentRows($column){
 
-//        Todo: fix it to work with chunks
 
         $relationName = $column->relationTable;
 
         $tableController = new TableController();
         $table = $tableController->getTableByName(Auth::user(), $relationName);
 
-        $chunk = $table->chunks->first();
+
+        $chunks = $table->chunks;
+
+        $rows = [];
+        foreach ($chunks as $chunk){
+            $rows = array_merge($rows, json_decode($chunk->data, true));
+        }
 
 
-        $data = json_decode($chunk->data, true);
-
-        $this->parents = $data;
+        $this->parents = $rows;
 
 //        $this->parents =  $database->tables->map(function ($tables) {
 //            return collect($tables->toArray())

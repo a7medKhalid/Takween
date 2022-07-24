@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const {off} = require("./public/js/app");
 
 module.exports = {
     content: [
