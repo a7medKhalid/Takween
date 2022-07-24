@@ -20,7 +20,7 @@ class Table extends Model
 
     public function database()
     {
-        return $this->belongsTo(Database::class , 'data_base_id');
+        return $this->belongsTo(DataBase::class , 'data_base_id');
     }
 
     public function chunks(){
