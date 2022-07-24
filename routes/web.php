@@ -2,6 +2,7 @@
 
 use App\Http\Livewire\Databases;
 use App\Http\Livewire\Editors;
+use App\Http\Livewire\LandingPage;
 use App\Http\Livewire\TableColumns;
 use App\Http\Livewire\TableFill;
 use App\Http\Livewire\Tables;
@@ -18,9 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', LandingPage::class)->name('LandingPage');
 
 Route::middleware([
     'auth:sanctum',

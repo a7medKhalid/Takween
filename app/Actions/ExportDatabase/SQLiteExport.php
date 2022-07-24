@@ -222,11 +222,34 @@ class SQLiteExport
 
             $sqlite->createTable($schema, $table->name);
 
-            if ($table->data){
+            foreach ($table->chunks as $chunk){
 
-                $rows = [];
+                if ($chunk->data){
 
-                foreach (json_decode($table->data, true) as $row){
+                    $rows = [];
+
+                    foreach (json_decode($chunk->data, true) as $row){
+                        array_push($rows, $row);
+                    }
+
+                    $sqlite->selectTable($table->name);
+                    $sqlite->add(json_encode($rows, JSON_NUMERIC_CHECK));
+                }
+            }
+
+
+        }
+
+        return $dbName;
+
+
+
+    }
+
+
+
+}
+
 
 //                    unset($row->id);
 //
@@ -254,27 +277,7 @@ class SQLiteExport
 //                        }
 //                    }
 
-                    //add relation by index instead of id
+//add relation by index instead of id
 
 
 //                    dd($row);
-
-                    array_push($rows, $row);
-
-                }
-
-                $sqlite->selectTable($table->name);
-                $sqlite->add(json_encode($rows, JSON_NUMERIC_CHECK));
-            }
-
-        }
-
-        return $dbName;
-
-
-
-    }
-
-
-
-}

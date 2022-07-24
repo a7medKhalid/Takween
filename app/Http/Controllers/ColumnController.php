@@ -19,6 +19,7 @@ class ColumnController extends Controller
 
        return $columns;
     }
+
     public function create($user, $table, $columnType, $columnName , $relationTable = null, $relationColumnName = null){
 
         //check if table database belongs to user
@@ -40,30 +41,30 @@ class ColumnController extends Controller
                 'type' => $columnType
             ]);
         }
-
         //add null values for previous data
         $table->fresh();
 
-        $rows = json_decode($table->data, true);
+        foreach ($table->chunks as $chunk){
 
-        $nullColumn = [$newColumn->name => 'NULL'];
+            $rows = json_decode($chunk->data, true);
+            $nullColumn = [$newColumn->name => 'NULL'];
 
-        if ($rows){
 
-            $updatedRows = [];
+            if ($rows){
 
-            foreach ($rows as $row){
-                $row = array_merge($row, $nullColumn);
+                $updatedRows = [];
 
-                array_push($updatedRows, $row);
+                foreach ($rows as $row){
+                    $row = array_merge($row, $nullColumn);
+
+                    array_push($updatedRows, $row);
+                }
+
+                $chunk->data = json_encode($updatedRows,JSON_NUMERIC_CHECK);
+
+                $chunk->save();
             }
-
-            $table->data = json_encode($updatedRows,JSON_NUMERIC_CHECK);
-
-            $table->save();
         }
-
-
 
         $table->columns()->save($newColumn);
 
@@ -77,30 +78,32 @@ class ColumnController extends Controller
             return false;
         }
 
-
         $columnModel = $table->columns->where('id', $column['id'])->first();
 
         $columnModel->delete();
 
-
         //delete column from rows
         $table->fresh();
 
-        $rows = json_decode($table->data, true);
 
-        if ($rows){
+        foreach ($table->chunks as $chunk){
 
-            $updatedRows = [];
+            $rows = json_decode($chunk->data, true);
 
-            foreach ($rows as $row){
-                unset($row[$columnModel->name]);
+            if ($rows){
 
-                array_push($updatedRows, $row);
+                $updatedRows = [];
+
+                foreach ($rows as $row){
+                    unset($row[$columnModel->name]);
+
+                    array_push($updatedRows, $row);
+                }
+
+                $chunk->data = json_encode($updatedRows,JSON_NUMERIC_CHECK);
+
+                $chunk->save();
             }
-
-            $table->data = json_encode($updatedRows,JSON_NUMERIC_CHECK);
-
-            $table->save();
         }
 
     }

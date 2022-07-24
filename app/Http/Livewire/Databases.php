@@ -21,7 +21,8 @@ class Databases extends Component
     public $invitedDatabases = [];
 
 
-    public $hideModal;
+    public $hideExportModal = true;
+    public $hideDeleteModal = true;
 
 
     public $databaseName ;
@@ -29,13 +30,23 @@ class Databases extends Component
     public $exportType;
     public $databaseId;
 
-    public function showModal($databaseId){
-        $this->hideModal = false;
+    public function showExportModal($databaseId){
+        $this->hideExportModal = false;
 
         $this->databaseId = $databaseId;
     }
-    public function hideModal(){
-    $this->hideModal = true;
+    public function hideExportModal(){
+    $this->hideExportModal = true;
+    }
+
+    public function showDeleteModal($databaseId){
+        $this->hideDeleteModal = false;
+
+        $this->databaseId = $databaseId;
+    }
+
+    public function hideDeleteModal(){
+        $this->hideDeleteModal = true;
     }
 
     public function exportDatabase(SQLiteExport $sqliteExport, JSONExport $jsonExport){
@@ -93,13 +104,13 @@ class Databases extends Component
 
     }
 
-    public function deleteDataBase($database){
+    public function deleteDataBase(){
 
         $user = Auth::user();
 
         $databaseController = new DataBaseController();
 
-        $databaseController->delete($user, $database['id']);
+        $databaseController->delete($user, $this->databaseId);
 
         $this->viewDatabases();
 

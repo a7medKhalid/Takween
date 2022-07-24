@@ -4,11 +4,18 @@ namespace App\Actions\TableJSONData;
 
 class AddRow
 {
-    public function execute($table, $newRow)
+    public function execute($table, $chunk, $newRow)
     {
+
+        $dataBase = $table->database;
+
+        //increase database rows count
+        $dataBase->rowsCount += 1;
+        $dataBase->save();
+
         $columns = $table->columns;
 
-        $rows = json_decode($table->data, true);
+        $rows = json_decode($chunk->data, true);
 
         $row = ['id' => $table->counter];
 

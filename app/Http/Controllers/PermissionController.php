@@ -30,6 +30,11 @@ class PermissionController extends Controller
 
         $editor = User::where('email', $editorEmail)->first();
 
+        //if there is no user with that email throw error
+        if (!$editor) {
+            return false;
+        }
+
         $permission = Permission::firstOrCreate([
             'data_base_id' => $database->id,
             'user_id' => $editor?->id,

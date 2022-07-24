@@ -18,7 +18,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->string('name');
-            $table->json('data')->nullable();
 
             $table->integer('counter')->default(1);
 

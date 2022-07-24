@@ -20,8 +20,11 @@ class JSONExport
         foreach ($tables as $table){
 
             //CP:it is added as string
-            $parentRows = json_decode($table->data);
+            $parentRows = [];
 
+            foreach ($table->chunks as $chunk){
+                array_push($parentRows, json_decode($chunk->data));
+            }
 
             $tableName = $table->name;
 
