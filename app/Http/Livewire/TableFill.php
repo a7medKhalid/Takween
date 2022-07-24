@@ -79,13 +79,17 @@ class TableFill extends Component
 
     public function getParentRows($column){
 
+//        Todo: fix it to work with chunks
+
         $relationName = $column->relationTable;
 
         $tableController = new TableController();
         $table = $tableController->getTableByName(Auth::user(), $relationName);
 
+        $chunk = $table->chunks->first();
 
-        $data = json_decode($table->data, true);
+
+        $data = json_decode($chunk->data, true);
 
         $this->parents = $data;
 

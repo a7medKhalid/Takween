@@ -19,9 +19,8 @@ return new class extends Migration
 
             $table->string('name');
 
-            $table->foreignId('user_id')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
 
-            $table->integer('rowsCount')->default(0);
         });
     }
 

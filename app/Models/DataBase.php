@@ -23,4 +23,10 @@ class DataBase extends Model
     {
         return $this->hasMany(Permission::class);
     }
+
+    //rows count accessor
+    public function getRowsCountAttribute()
+    {
+        return $this->tables->sum('rowsCount');
+    }
 }

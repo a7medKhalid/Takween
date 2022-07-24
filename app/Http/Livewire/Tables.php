@@ -21,6 +21,19 @@ class Tables extends Component
 
     public $isOwned;
 
+    public $hideDeleteModal = true;
+    public $databaseId;
+
+    public function showDeleteModal($databaseId){
+        $this->hideDeleteModal = false;
+
+        $this->databaseId = $databaseId;
+    }
+
+    public function hideDeleteModal(){
+        $this->hideDeleteModal = true;
+    }
+
 
     function viewTables(){
 
@@ -40,11 +53,11 @@ class Tables extends Component
 
     }
 
-    public function deleteTable($table){
+    public function deleteTable(){
 
        $tableController = new TableController();
 
-         $tableController->delete(Auth::user(),$table['id']);
+         $tableController->delete(Auth::user(),$this->databaseId);
 
         $this->viewTables();
 

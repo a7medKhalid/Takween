@@ -21,7 +21,10 @@ return new class extends Migration
 
             $table->integer('counter')->default(1);
 
-            $table->foreignId('data_base_id')->nullable();
+            $table->foreignId('data_base_id')->nullable()->constrained()->onDelete('cascade');
+
+            $table->integer('rowsCount')->default(0);
+
         });
     }
 

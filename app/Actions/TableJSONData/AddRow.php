@@ -7,11 +7,10 @@ class AddRow
     public function execute($table, $chunk, $newRow)
     {
 
-        $dataBase = $table->database;
 
         //increase database rows count
-        $dataBase->rowsCount += 1;
-        $dataBase->save();
+        $table->rowsCount += 1;
+        $table->save();
 
         $columns = $table->columns;
 
