@@ -30,4 +30,20 @@ class DataBasePolicy
         return false;
 
     }
+
+    //check if user can add rows to database
+    public function addRows(User $user, DataBase $database)
+    {
+        $getUserSubscriptionType = new GetUserSubscrbtionTypeAction();
+        $subscriptionType = $getUserSubscriptionType->execute($user);
+        $rowsCount = $database->rowsCount;
+        if ($subscriptionType == 'free') {
+            return $rowsCount < 1000;
+        } elseif ($subscriptionType == 'basic') {
+            return $rowsCount < 5000;
+        } elseif ($subscriptionType == 'pro') {
+            return $rowsCount < 10000;
+        }
+        return false;
+    }
 }

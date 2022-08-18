@@ -28,11 +28,12 @@ class Editors extends Component
 
     public function addEditor(){
 
-        //demo constraints
-        $isEditor = $this->database->permissions->first();
-        if ($isEditor){
-            $isEditor->delete();
+        $user = Auth::user();
+        if($user->cannot('addEditor', $this->database)){
+            $this->addError('editor', 'Upgrade your subscription to add editors');
+            return;
         }
+
 
         $permissionController = new PermissionController();
 
