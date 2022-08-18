@@ -95,10 +95,8 @@ class Databases extends Component
 
         $user = Auth::user();
 
-        //demo constraints
-        $isDatabase = $user->databases->first();
-        if ($isDatabase){
-            $this->addError('database', 'You can not add more than one database in starter subscription');
+       if ($user->cannot('create', DataBase::class)){
+            $this->addError('database', 'Upgrade your subscription to create more databases');
             return ;
         }
 
