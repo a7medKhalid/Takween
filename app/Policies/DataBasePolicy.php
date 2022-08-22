@@ -35,7 +35,7 @@ class DataBasePolicy
     //check if user can add rows to database
     public function addRows(User $user, DataBase $database)
     {
-        $getUserSubscriptionType = new CheckBMCForNewSubscriptions();
+        $getUserSubscriptionType = new GetUserSubscrbtionTypeAction();
         $subscriptionType = $getUserSubscriptionType->execute($user);
         $rowsCount = $database->rowsCount;
         if ($subscriptionType == 'free') {
