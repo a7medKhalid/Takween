@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Actions\subscrbtions\CheckBMCForNewSubscriptions;
+use App\Actions\subscrbtions\GetUserSubscrbtionTypeAction;
 use App\Models\DataBase;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -14,7 +15,7 @@ class DataBasePolicy
     public function create(User $user)
     {
 
-        $getUserSubscriptionType = new CheckBMCForNewSubscriptions();
+        $getUserSubscriptionType = new GetUserSubscrbtionTypeAction();
         $subscriptionType = $getUserSubscriptionType->execute($user);
 
         $userDatabasesCount = $user->databases()->count();
