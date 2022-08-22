@@ -47,7 +47,7 @@
                             </div>
 
                             <div class="mt-3">
-                                <label> Chose relation column from the list:
+                                <label> Chose column to be shown when adding relation:
                                     <select wire:model="relationColumnName" id="relationColumns">
                                         <option value="">select column</option>
                                         @if($relationColumns)
