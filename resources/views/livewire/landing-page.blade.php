@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <link rel="canonical" href="https://https://demo.themesberg.com/landwind/" />
+{{--    <link rel="canonical" href="https://https://demo.themesberg.com/landwind/" />--}}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -180,7 +180,7 @@
                     <li class="flex space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-slate-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                        <span class="text-base font-medium leading-tight text-gray-900 ">Create multiple databases with a click.</span>
+                        <span class="text-base font-medium leading-tight text-gray-900 ">Create your databases with a click.</span>
                     </li>
                     <li class="flex space-x-3">
                         <!-- Icon -->
@@ -190,12 +190,12 @@
                     <li class="flex space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-slate-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                        <span class="text-base font-medium leading-tight text-gray-900 ">Add columns with different types(text, relation...).</span>
+                        <span class="text-base font-medium leading-tight text-gray-900 ">Add columns with different types(text, relation...) to your table.</span>
                     </li>
                 </ul>
                 <p class="mb-8 font-light lg:text-xl">Your database is ready with a ready form for each table to fill data.</p>
             </div>
-            <img class="hidden w-full mb-4 rounded-lg lg:mb-0 lg:flex" src="{{asset('columns.png')}}" alt="dashboard feature image">
+            <img class="w-full mb-4 rounded-lg lg:mb-0 lg:flex" src="{{asset('columns.png')}}" alt="dashboard feature image">
         </div>
         <!-- Row -->
         <div class="items-center gap-8 lg:grid lg:grid-cols-2 xl:gap-16">
@@ -230,6 +230,8 @@
                 <p class="font-light lg:text-xl">Now you do not need to write code to create forms for every database because you can do it in few clicks with Takween.</p>
             </div>
         </div>
+        <img class="w-full mb-4 rounded-lg lg:hidden" src="{{asset('fillFourm.png')}}" alt="feature image 2">
+
     </div>
 </section>
 <!-- End block -->
@@ -342,19 +344,7 @@
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span class="line-through">1000 Rows for database</span>
-                    </li>
-                    <li class="flex items-center space-x-3">
-                        <!-- Icon -->
-                        <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>5000 Rows for database </span>
-                        <span class="text-xs"> for limited time</span>
-                    </li>
-                    <li class="flex items-center space-x-3">
-                        <!-- Icon -->
-                        <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>One team member </span>
-                        <span class="text-xs"> for limited time</span>
+                        <span>1000 Rows for database</span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
@@ -366,10 +356,10 @@
             </div>
             <!-- Pricing Card -->
             <div class="flex flex-col max-w-lg p-6 mx-auto text-center text-gray-900 bg-white border border-gray-100 rounded-lg shadow  xl:p-8 ">
-                <h3 class="mb-4 text-2xl font-semibold">Soon</h3>
-                <p class="font-light text-gray-500 sm:text-lg ">---------------------------------------</p>
+                <h3 class="mb-4 text-2xl font-semibold">Basic</h3>
+                <p class="font-light text-gray-500 sm:text-lg ">Great for freelancers</p>
                 <div class="flex items-baseline justify-center my-8">
-                    <span class="mr-2 text-5xl font-extrabold">--</span>
+                    <span class="mr-2 text-5xl font-extrabold">5 $</span>
                     <span class="text-gray-500 " >/month</span>
                 </div>
                 <!-- List -->
@@ -377,37 +367,37 @@
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>-------------</span>
+                        <span>10 Database</span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>-------------</span>
+                        <span>Unlimited tables</span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>-------------</span>
+                        <span>5000 Rows for database</span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>-------------</span>
+                        <span>All types export</span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>-------------</span>
+                        <span>One team member for every database </span>
                     </li>
                 </ul>
-                <a href="#" class="text-white bg-slate-600 hover:bg-slate-700 focus:ring-4 focus:ring-slate-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Soon</a>
+                <a href="{{route('register')}}" class="text-white bg-slate-600 hover:bg-slate-700 focus:ring-4 focus:ring-slate-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Get started</a>
             </div>
             <!-- Pricing Card -->
             <div class="flex flex-col max-w-lg p-6 mx-auto text-center text-gray-900 bg-white border border-gray-100 rounded-lg shadow xl:p-8 ">
-                <h3 class="mb-4 text-2xl font-semibold">Soon</h3>
-                <p class="font-light text-gray-500 sm:text-lg ">---------------------------------------</p>
+                <h3 class="mb-4 text-2xl font-semibold">Pro</h3>
+                <p class="font-light text-gray-500 sm:text-lg ">When you need more power</p>
                 <div class="flex items-baseline justify-center my-8">
-                    <span class="mr-2 text-5xl font-extrabold">--</span>
+                    <span class="mr-2 text-5xl font-extrabold">25 $</span>
                     <span class="text-gray-500" >/month</span>
                 </div>
                 <!-- List -->
@@ -415,30 +405,30 @@
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>-------------</span>
+                        <span>50 Database</span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>-------------</span>
+                        <span>Unlimited tables</span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>-------------</span>
+                        <span>10000 Rows for database</span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>-------------</span>
+                        <span>All types export</span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>-------------</span>
+                        <span>10 team members for every database </span>
                     </li>
                 </ul>
-                <a href="#" class="text-white bg-slate-600 hover:bg-slate-700 focus:ring-4 focus:ring-slate-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Soon</a>
+                <a href="{{route('register')}}" class="text-white bg-slate-600 hover:bg-slate-700 focus:ring-4 focus:ring-slate-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Get started</a>
             </div>
 
         </div>

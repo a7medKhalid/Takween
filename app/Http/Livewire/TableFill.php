@@ -60,11 +60,11 @@ class TableFill extends Component
 
 
     public function addRow(){
-        //demo constraints
         $database = $this->table->database;
-        $rowsCount = $database->rowsCount;
-        if ($rowsCount >= 5000){
-            $this->addError('rows', 'You can not add more than 5000 rows in starter subscription');
+
+        $user = Auth::user();
+        if ($user->cannot('addRows', $database)) {
+            $this->addError('rows', 'Upgrading your subscription will allow you to add more rows');
             return;
         }
 
