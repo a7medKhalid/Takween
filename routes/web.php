@@ -3,6 +3,7 @@
 use App\Http\Livewire\Databases;
 use App\Http\Livewire\Editors;
 use App\Http\Livewire\LandingPage;
+use App\Http\Livewire\Subscriptions;
 use App\Http\Livewire\TableColumns;
 use App\Http\Livewire\TableFill;
 use App\Http\Livewire\Tables;
@@ -35,6 +36,8 @@ Route::middleware([
 
     Route::get('/tables/{id}/build', TableColumns::class)->name('Build Table');
     Route::get('/tables/{id}/fill', TableFill::class)->name('Fill Table');
+
+    Route::get('/subscriptions',Subscriptions::class)->name('Subscriptions');
 
 
 
