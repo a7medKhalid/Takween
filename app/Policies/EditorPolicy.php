@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Actions\subscrbtions\GetUserSubscrbtionTypeAction;
+use App\Actions\subscrbtions\CheckBMCForNewSubscriptions;
 use App\Models\DataBase;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -14,7 +14,7 @@ class EditorPolicy
     //check if user can add editor
     public function addEditor(User $user, DataBase $dataBase)
     {
-        $getUserSubscriptionType = new GetUserSubscrbtionTypeAction();
+        $getUserSubscriptionType = new CheckBMCForNewSubscriptions();
         $subscriptionType = $getUserSubscriptionType->execute($user);
         $editorsCount = $dataBase->editors()->count();
         if ($subscriptionType == 'free') {

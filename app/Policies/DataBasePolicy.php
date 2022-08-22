@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Actions\subscrbtions\GetUserSubscrbtionTypeAction;
+use App\Actions\subscrbtions\CheckBMCForNewSubscriptions;
 use App\Models\DataBase;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -14,7 +14,7 @@ class DataBasePolicy
     public function create(User $user)
     {
 
-        $getUserSubscriptionType = new GetUserSubscrbtionTypeAction();
+        $getUserSubscriptionType = new CheckBMCForNewSubscriptions();
         $subscriptionType = $getUserSubscriptionType->execute($user);
 
         $userDatabasesCount = $user->databases()->count();
@@ -34,7 +34,7 @@ class DataBasePolicy
     //check if user can add rows to database
     public function addRows(User $user, DataBase $database)
     {
-        $getUserSubscriptionType = new GetUserSubscrbtionTypeAction();
+        $getUserSubscriptionType = new CheckBMCForNewSubscriptions();
         $subscriptionType = $getUserSubscriptionType->execute($user);
         $rowsCount = $database->rowsCount;
         if ($subscriptionType == 'free') {
