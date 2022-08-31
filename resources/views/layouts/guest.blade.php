@@ -12,6 +12,17 @@
             gtag('config', 'G-H1HTGW2WRQ');
         </script>
 
+        <!-- Global site tag (gtag.js) - Google Ads: 438122042 -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-438122042"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'AW-438122042');
+        </script>
+
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
