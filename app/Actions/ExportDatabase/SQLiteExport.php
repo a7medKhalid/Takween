@@ -240,6 +240,10 @@ class SQLiteExport
 
         }
 
+        //increment export count
+        $user->exportsCount++;
+        $user->save();
+
         return $dbName;
 
 

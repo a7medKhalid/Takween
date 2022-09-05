@@ -60,6 +60,10 @@
                             >
                                 Add Table
                             </button>
+
+                            @if($errors->has('tableName'))
+                                <span class="text-red-500">{{ $errors->first('tableName') }}</span>
+                            @endif
                         </div>
 
                     </form>
