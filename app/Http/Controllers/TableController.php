@@ -44,8 +44,9 @@ class TableController extends Controller
 
     public function create($user, $database, $tableName){
 
+
         //check if database belongs to user
-        if($database->user_id != $user->id){
+        if ($database->user_id != $user->id) {
             return false;
         }
 
@@ -63,6 +64,8 @@ class TableController extends Controller
         $newTable->columns()->save($idColumn);
 
         return $newTable;
+
+
 
     }
 

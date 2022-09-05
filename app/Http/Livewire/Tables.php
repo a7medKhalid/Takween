@@ -45,10 +45,20 @@ class Tables extends Component
 
         $tableController = new TableController();
 
-        $newTable = $tableController->create(Auth::user(), $this->database, $this->tableName);
+        //validate table name has no spaces and is unique for the same database and is not empty and only english letters and numbers
+        if (preg_match('/^[a-zA-Z0-9]+$/', $this->tableName) && $this->database->tables()->where('name', $this->tableName)->first() == null && $this->tableName != '') {
 
-        $this->tables->push($newTable);
-        $this->tableName = '';
+            $newTable = $tableController->create(Auth::user(), $this->database, $this->tableName);
+            $this->tables->push($newTable);
+            $this->tableName = '';
+
+        }
+        else{
+            $this->addError('tableName', 'Table name must be unique for same database and only contain english letters and numbers and with no spaces');
+            return false ;
+        }
+
+
 
 
     }

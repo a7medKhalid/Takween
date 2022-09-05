@@ -35,6 +35,10 @@ class JSONExport
 
         }
 
+        //increment export count
+        $user->exportsCount++;
+        $user->save();
+
 
         return json_encode($jsonExport,JSON_NUMERIC_CHECK);
 

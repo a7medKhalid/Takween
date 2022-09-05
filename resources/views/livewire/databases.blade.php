@@ -14,9 +14,9 @@
                         <label>Choose export type from this list: </label>
                         <select wire:model="exportType" id="types">
                                 <option >Export Type</option>
-{{--                                <option value="json">JSON</option>--}}
+                                <option value="json">JSON</option>
                                 <option value="sqlite">sqlite</option>
-                                <option value="nestedJson">nested JSON</option>
+{{--                                <option value="nestedJson">nested JSON</option>--}}
                             </select>
 
                         <div class="mt-4">
